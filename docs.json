@@ -35,16 +35,6 @@
           "anchor": "Home",
           "icon": "house",
           "href": "/"
-        },
-        {
-          "anchor": "Changelog",
-          "icon": "scroll-text",
-          "href": "/changelog"
-        },
-        {
-          "anchor": "Support",
-          "icon": "life-buoy",
-          "href": "/support"
         }
       ]
     },
