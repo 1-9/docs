@@ -1,6 +1,6 @@
 {
   "$schema": "https://mintlify.com/docs.json",
-  "theme": "venus",
+  "theme": "maple",
   "name": "Domainer Engine",
   "description": "Documentation for Domainer Engine — a ready-to-deploy domain portfolio marketplace built on Next.js and Payload CMS.",
   "colors": {
