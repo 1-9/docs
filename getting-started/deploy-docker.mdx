@@ -8,7 +8,7 @@ description: "Deploy Domainer Engine on any server using a pre-built Docker imag
 This guide uses the pre-built Docker image published to GitHub Container Registry (GHCR). You don't build anything from source — Docker pulls the ready-to-run image directly. Updates are a single command or one click in your hosting panel.
 
 <Info>
-  Before you start, make sure you have received a GitHub repository invite. You need it to authenticate and pull the private Docker image. If you haven't received an invite or it has expired, contact me to get a new one.
+  You need a GitHub organization invite to access the repository and pull the Docker image. If you haven't received one, or it has expired, contact me. After accepting, the repository will be available at [github.com/domainer-platform/domainer-platform-releases](https://github.com/domainer-platform/domainer-platform-releases).
 </Info>
 
 ## Prerequisites
@@ -44,7 +44,7 @@ This guide uses the pre-built Docker image published to GitHub Container Registr
   </Step>
 
   <Step title="Download the Compose file">
-    Download `docker-compose.hub.yml` from the GitHub repository you were invited to and place it on your server. This file tells Docker which image to pull and how to configure the services.
+    Go to [github.com/domainer-platform/domainer-platform-releases](https://github.com/domainer-platform/domainer-platform-releases), find `docker-compose.hub.yml`, and place it on your server. This file tells Docker which image to pull and how to configure the services.
 
     You can do this via SFTP, or copy the file contents directly from GitHub and create it manually on the server.
   </Step>
