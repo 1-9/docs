@@ -1,0 +1,85 @@
+---
+title: "Updating"
+description: "How to update Domainer Engine to a new version — three paths depending on how you deployed."
+---
+
+Updates replace only the core platform engine, leaving your content, settings, and theme customizations untouched. Database migrations run automatically on startup — you never need to run them manually.
+
+If the platform or storefront where you purchased Domainer Engine supports update notifications, you'll receive one when a new version is available. You can also check for updates at any time by visiting your purchase history.
+
+<Warning>
+  Back up your database before updating. Open **Settings → Storage** in the admin panel, create a backup, and download it before proceeding.
+</Warning>
+
+<Tabs>
+  <Tab title="Vercel">
+    Updating on Vercel is one click:
+
+    <Steps>
+      <Step title="Sync your fork">
+        Open your fork on GitHub and click **Sync fork** → **Update branch**.
+
+        GitHub pulls the latest changes from the upstream repository into your fork.
+      </Step>
+
+      <Step title="Vercel deploys automatically">
+        Vercel detects the new commit and starts a deployment automatically. No action needed on your part — watch the **Deployments** tab for the build to complete.
+
+        Migrations run during the build step before the app goes live.
+      </Step>
+    </Steps>
+  </Tab>
+
+  <Tab title="Docker (GHCR image)">
+    Updating the Docker image deployment takes a single command:
+
+    ```bash
+    docker compose -f docker-compose.hub.yml pull
+    docker compose -f docker-compose.hub.yml up -d
+    ```
+
+    Docker pulls the latest image from GHCR, stops the current container, and starts the updated one. Migrations run automatically on startup. Downtime is typically under 30 seconds.
+
+    **Using Hostinger Docker Manager?** Open your project → click **⋯** → **Update**. That's it.
+  </Tab>
+
+  <Tab title="ZIP (source build)">
+    <Steps>
+      <Step title="Download the new version">
+        Download the updated source files from where you purchased the platform.
+      </Step>
+
+      <Step title="Replace the engine directory">
+        On your server, delete the existing `engine/` directory and replace it with the `engine/` directory from the new version.
+
+        Do not replace anything outside `engine/` unless the release notes explicitly say to.
+      </Step>
+
+      <Step title="Rebuild and restart">
+        ```bash
+        docker compose down
+        docker compose up -d --build
+        ```
+
+        The `--build` flag forces Docker to rebuild the image with the updated source. Migrations run automatically on startup.
+
+        The rebuild takes 3–5 minutes, same as the initial deployment.
+      </Step>
+    </Steps>
+  </Tab>
+</Tabs>
+
+## After updating
+
+- Open the admin panel and verify everything looks correct
+- If you use AI prompt customizations in **Settings → Prompts**, new prompt types added in the update need to be seeded manually. On ZIP/Docker deployments, run `npx tsx --env-file=.env scripts/seed-prompts.ts` from the project directory to add only the missing prompt types without affecting your existing ones. On Vercel, this runs automatically during the build step.
+- Read the release notes for any version-specific manual steps
+
+<AccordionGroup>
+  <Accordion title="What happens to my data during an update?">
+    Your database is never deleted or reset by an update. Migrations only add new columns or tables — they never remove existing data. If a migration fails (rare), the app will not start and will log a descriptive error message.
+  </Accordion>
+  <Accordion title="What does engine/ contain and why can it be replaced safely?">
+    `engine/` is the core of the platform: collections, globals, components, API routes, blocks, and page templates. It is designed to be replaced wholesale. Your customizations live in `theme/` and your content lives in the database — neither is touched by replacing `engine/`.
+  </Accordion>
+</AccordionGroup>

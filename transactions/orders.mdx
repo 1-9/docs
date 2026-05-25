@@ -1,0 +1,69 @@
+---
+title: "Orders"
+description: "Track completed and in-progress domain sales from payment through transfer."
+---
+
+Go to **Transactions → Orders** in the admin panel.
+
+Orders record domain sales from the moment payment is confirmed through to completed transfer. Each order links a domain, a buyer, a payment reference, and a status that moves the sale from **Paid** to **Transferred**.
+
+<Info>
+  Integrated payment processing (Stripe checkout, Escrow) is not yet implemented. Orders are currently created and managed manually. The collection is fully in place and will be wired up to payment providers in a future release.
+</Info>
+
+---
+
+## Order fields
+
+| Field | Description |
+|---|---|
+| **Domain** | The domain being sold. Required. |
+| **Buyer Email** | Buyer's email address. |
+| **Buyer Name** | Buyer's name. |
+| **Amount** | Sale price in USD. |
+| **Status** | Current stage of the sale (see below). |
+| **Type** | How the sale was initiated: **Buy It Now**, **Offer**, or **Escrow**. |
+| **Stripe Payment Intent ID** | Payment Intent ID from Stripe. For future use. |
+| **Stripe Checkout Session ID** | Checkout Session ID from Stripe. For future use. |
+| **Escrow Transaction ID** | Transaction ID from Escrow.com. For future use. |
+| **Payment Link URL** | Any payment link you generated externally (Wise, PayPal, manual invoice). |
+| **Notes** | Rich text notes — internal use only. |
+| **Paid At** | Date payment was confirmed. |
+| **Transferred At** | Date domain transfer was completed. |
+
+---
+
+## Status flow
+
+| Status | Meaning |
+|---|---|
+| **Pending** | Sale agreed, payment not yet received. |
+| **Paid** | Payment confirmed. Transfer in progress. |
+| **Transferred** | Domain transferred to the buyer. Sale complete. |
+| **Cancelled** | Sale cancelled before payment. |
+| **Refunded** | Payment received but refunded. |
+
+---
+
+## Domain status and orders
+
+Orders and domain status are managed independently — changing an order's status does not automatically change the domain's status. After confirming a sale:
+
+1. Update the **Order** status to **Paid** and set the **Paid At** date.
+2. Go to the **Domain** record and set its status to **Sold**.
+3. Once the transfer is complete, update the Order status to **Transferred**, set **Transferred At**, and optionally update the domain to **Transferred** as well.
+
+---
+
+## Creating an order manually
+
+Until payment processing is integrated, create orders yourself after a sale is agreed:
+
+1. Click **Create New** in the Orders list.
+2. Link the **Domain** and enter the buyer's details.
+3. Set **Type** to match how the sale was initiated (Buy It Now, Offer, or Escrow).
+4. Enter the agreed **Amount**.
+5. Paste any external payment link in **Payment Link URL** if you're invoicing via a third-party tool.
+6. Set **Status** to **Pending** and save.
+
+Update the status and date fields as the sale progresses.

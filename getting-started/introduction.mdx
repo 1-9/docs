@@ -1,0 +1,83 @@
+---
+title: "Introduction"
+description: "Domainer Engine is a ready-to-deploy domain portfolio marketplace — a complete website for selling domains, built on Next.js and Payload CMS."
+---
+
+Domainer Engine gives you a professional, fully operational domain marketplace without writing any code. Deploy on Vercel or your own server, run through the Setup Wizard, and your site is live with categories, pages, and navigation already in place.
+
+One instance runs one marketplace — your portfolio, your brand, your URL.
+
+## Domain portfolio
+
+- **Import your entire portfolio at once** from Afternic, Sedo, Atom, CSV, or a plain text file. Duplicate detection merges incoming records with existing ones instead of creating duplicates.
+- **Inline editing from the domains table** — change price, status, or sale model without opening each record individually.
+- **Rich domain fields** — description, tagline, short description, use cases, curator's insight, brand color, logo, background image, categories, tags, similar domains, marketplace links, and RDAP-sourced registrar data.
+- **Sale models** — Buy Now, Make Offer, Buy Now + Offer, and Contact Only. Each domain can have a different model.
+- **Featured mechanism** — mark select domains as featured to highlight them in grids and spotlight blocks across the site.
+- **Editable categories** — add, rename, and color-code domain categories. Used for filtering, browsing, and AI context.
+
+## AI generation
+
+- **Text generation** — description, tagline, short description, use cases, curator's insight, brand color, SEO title and meta description. Generate all fields at once or regenerate individual ones.
+- **Image generation** — logo and background image for any domain, generated via a connected image provider.
+- **AI domain assistant** — a chat widget on the public site where visitors describe what they're looking for and AI suggests matching domains from your portfolio.
+- **Provider and model selection** — connect OpenAI, Anthropic, or Google AI. Choose the specific model from your account.
+- **Prompt editor** — all 23 generation templates are fully editable. Adjust tone, structure, output length, and context for any field.
+
+## Storefront
+
+- **Page builder with 23 blocks** — hero, domain grids, blog grids, category grids, testimonials, FAQs, pricing, stats, forms, video, and more. Drag to reorder, configure each block independently.
+- **Domain page template** — choose which content modules appear on every domain page and in what order: use cases, curator's insight, technical dossier, similar domains, branding playground, and more.
+- **Blog** — visual rich-text editor, post categories, AI generation for content and SEO metadata.
+- **Form builder** — create contact, inquiry, or custom forms and embed them on any page.
+- **Menu editor** — main navigation with nested items, footer columns with links, and a configurable CTA button.
+- **Appearance** — light or dark theme, font family, accent colors, CTA button color, border radius, and domain card layout. Looks clean and professional even without uploaded images.
+
+## Deal flow
+
+- **Inquiries and offers** — buyers submit directly through your site. Every record is stored in the admin panel with full history.
+- **Counter-offer workflow** — review incoming offers, send a counter, accept, or reject. Each status change can trigger a notification.
+- **Notifications** — email via Resend and instant Telegram push alerts. Each event type (new inquiry, new offer, counter, price drop, domain expiry) is toggled independently.
+- **Price tracking** — buyers subscribe to domains they want. When you lower the price, they receive an automatic alert.
+- **Newsletter sign-up** — a subscriber form in the site footer, powered by Brevo.
+
+## Analytics & SEO
+
+- **Server-side analytics** — page views, marketplace button clicks, offer and inquiry submissions, tracked without cookies and GDPR-compliant by design. Per-domain breakdown in the admin panel.
+- **Google Analytics 4** — optional integration with a built-in GDPR cookie consent banner.
+- **Automatic SEO** — dynamic `sitemap.xml`, `robots.txt`, Open Graph and Twitter card tags, canonical URLs, and JSON-LD structured data generated for every page.
+- **Search engine verification** — add Google Search Console and Bing Webmaster verification codes from the admin panel.
+
+## Platform & operations
+
+- **Deploy anywhere** — Vercel (recommended, free tier available) or any Docker-capable server.
+- **Instant start** — the Setup Wizard seeds 21 domain categories, AI prompt templates, five base CMS pages, and navigation defaults. Your site is functional immediately after the wizard completes.
+- **Database backups** — create a full backup of your data from the admin panel and download it as a JSON file. Stored in your Cloudflare R2 backup bucket.
+- **Cloudflare R2 storage** — fast CDN-backed image hosting for domain logos, backgrounds, blog images, and your site logo.
+- **Updates** — new versions update only the core engine, leaving your theme customizations untouched.
+
+---
+
+## Choose your deployment
+
+<CardGroup cols={2}>
+  <Card title="Deploy on Vercel" icon="triangle" href="/getting-started/deploy-vercel">
+    Recommended. Free database via Neon, automatic HTTPS, zero server management.
+  </Card>
+  <Card title="Deploy with Docker" icon="docker" href="/getting-started/deploy-docker">
+    Self-managed server. Full control over your infrastructure and data.
+  </Card>
+</CardGroup>
+
+<AccordionGroup>
+  <Accordion title="Technical foundation">
+    Domainer Engine is built on a modern, actively maintained stack:
+
+    - **Next.js 16** with App Router, React Server Components, and Incremental Static Regeneration (ISR). Domain, category, blog, and CMS pages are statically generated and served from the CDN. Content updates are reflected immediately via tag-based cache invalidation — no manual cache clearing.
+    - **Payload CMS 3** — a TypeScript-native headless CMS powering the admin panel. All collections, fields, and globals are fully typed.
+    - **Tailwind CSS v4** with a design token system for colors, typography, spacing, and radius.
+    - **TypeScript** throughout — no untyped code in the engine.
+    - **SEO stack** — JSON-LD schemas for Organization, Product, Article, and BreadcrumbList; Open Graph and Twitter card meta tags; canonical URLs; dynamic sitemap and robots.txt generated at runtime.
+    - **GDPR-compliant analytics** — visitor fingerprints are one-way SHA-256 hashes of IP address + date + a secret salt. Raw IP addresses are never stored or logged.
+  </Accordion>
+</AccordionGroup>

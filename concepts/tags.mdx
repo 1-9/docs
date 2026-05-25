@@ -1,0 +1,37 @@
+---
+title: "Tags"
+description: "How tags work on Domainer Engine — a flexible filter layer for your domain inventory."
+---
+
+Tags are free-form labels attached to individual domains. They are used as filter chips on the public inventory page, letting visitors narrow the domain list to domains matching a specific theme or keyword.
+
+## How tags work
+
+Tags live on the **Categories & Tags** section of the domain edit form. Each domain can have any number of tags. Tags are plain text — there is no shared list or taxonomy to manage.
+
+When a visitor clicks a tag filter on the inventory page, the page reloads showing only domains that have that tag. That's the extent of it — tags have no dedicated pages, no SEO metadata, and no editable template.
+
+## Adding tags
+
+In the domain form, the tag field accepts input in two ways:
+
+- **Type and press Enter** — adds one tag at a time
+- **Paste comma-separated values** — `fintech, payments, startup` creates three tags in one step
+
+Tags can be reordered by dragging. Click the × on any tag to remove it.
+
+## AI-generated tags
+
+When you run **Generate All** or use the individual tag regen button, the AI generates a set of relevant tags based on the domain name, category, and description. Review and save — tags are never auto-applied without your confirmation.
+
+## Tags vs. categories
+
+| | Tags | Categories |
+|---|---|---|
+| Purpose | Flexible filter labels | Content taxonomy with public pages |
+| Public page | No | Yes — `/categories/{slug}` |
+| Template | No | Yes — Category page template |
+| AI categorization | Yes (AI generates suggestions) | Yes (AI assigns from your list) |
+| Where visitors see them | Inventory filter bar | Category pages, domain cards, navigation |
+
+Use categories when you want a dedicated page and SEO value for a group of domains. Use tags for finer-grained filtering that doesn't warrant a full page.

@@ -1,0 +1,62 @@
+---
+title: "AI Settings"
+description: "Configure AI text and image generation — provider, model, and writing persona."
+---
+
+**Settings → AI** is where you connect an AI provider and control the tone and style of all generated content. The AI writes domain descriptions, taglines, use cases, SEO metadata, brand colors, and more — but only when you explicitly click a generate button. Nothing is generated or saved automatically.
+
+## Enabling AI
+
+The **AI Enabled** checkbox is the master switch. When disabled, all Generate buttons are hidden across the admin panel.
+
+## Text generation
+
+| Field | Description |
+|---|---|
+| **Provider** | OpenAI, Anthropic, or Google. You only need one. |
+| **API Key** | Your secret key from the provider. Stored securely — not visible after saving. |
+| **Model** | After entering the API key, click **Load Models** to fetch available models and choose one. |
+| **Max Tokens** | Maximum length of each generated response. Default: 2000. |
+| **Temperature** | Controls creativity vs. consistency. Range 0–1. Default: 0.7. Lower = more predictable, higher = more varied. |
+
+<Note>
+  The model selector loads available models from your provider's API using the key you entered. If the list is empty, double-check that the API key is correct and has the necessary permissions.
+</Note>
+
+## Image generation
+
+A separate configuration block for AI image generation (domain logos and background images). Supports OpenAI (DALL-E) and Google (Imagen).
+
+| Field | Description |
+|---|---|
+| **Provider** | OpenAI or Google. Can be the same or different from your text provider. |
+| **API Key** | A separate API key for the image provider if different from your text key. |
+| **Image Model** | Click **Load Models** after entering the key to select a model. |
+
+## AI Writing Persona
+
+Two fields that shape how the AI writes across all prompts:
+
+**Site Description** — a brief description of your domain portfolio. Gets injected as `{{siteDescription}}` into prompts that benefit from knowing your portfolio's focus. Example: `"Premium tech and SaaS domain portfolio targeting startup founders."`
+
+**AI Writing Persona** — a system-level instruction that sets the tone, voice, and style restrictions for all generated text. A default persona is pre-loaded at setup — it instructs the AI to write for business buyers (not domain investors), vary sentence length, avoid overused buzzwords, and write content specific to each domain.
+
+You can customize the persona to match your own voice. Keep it concise — 5 to 10 focused instructions tend to outperform long lists.
+
+<Tip>
+  To reset the persona to the default, delete the contents and save. The default will be restored on the next seed run, or you can copy the default from the Setup Wizard step.
+</Tip>
+
+## Which provider to choose
+
+All three providers are well-suited for domain content. The main differences:
+
+| Provider | Strengths | Where to get a key |
+|---|---|---|
+| **OpenAI** | GPT-4o — strong at marketing copy and descriptions | [platform.openai.com/api-keys](https://platform.openai.com/api-keys) |
+| **Anthropic** | Claude — excellent instruction-following, good at persona constraints | [console.anthropic.com/settings/keys](https://console.anthropic.com/settings/keys) |
+| **Google** | Gemini — competitive quality, generous free tier | [aistudio.google.com/apikey](https://aistudio.google.com/apikey) |
+
+<Warning>
+  Pricing, free tier limits, and model availability change over time. Verify current conditions on each provider's website before committing to a plan.
+</Warning>

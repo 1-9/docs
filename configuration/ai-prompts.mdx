@@ -1,0 +1,115 @@
+---
+title: "AI Prompts"
+description: "How to view and customize the prompt templates used for AI content generation."
+---
+
+**Settings → Prompts** contains the prompt templates that power every AI generation button in the admin panel. Each template is a text instruction with `{{variables}}` that get filled in at generation time.
+
+The Setup Wizard seeds all prompts automatically during first launch. You can customize any template to match your style — your edits are preserved across platform updates.
+
+## How prompts work
+
+When you click a Generate button on a domain or category, the platform:
+
+1. Looks up the matching prompt template by its type slug (e.g. `domain-description`)
+2. Fills in the `{{variables}}` with data from the current record
+3. Sends the filled prompt to your configured AI provider
+4. Returns the result for your review — you save it manually
+
+## Available variables
+
+Variables are automatically filled when the prompt runs. You can use any combination in a template:
+
+| Variable | Value |
+|---|---|
+| `{{domainName}}` | The full domain name, e.g. `sell.beer` |
+| `{{tld}}` | The extension only, e.g. `.beer` |
+| `{{emoji}}` | The domain's emoji |
+| `{{category}}` | The primary category name |
+| `{{allCategories}}` | Full list of your domain categories — used for categorization prompts |
+| `{{description}}` | The domain's current description |
+| `{{tagline}}` | The domain's current tagline |
+| `{{curatorInsight}}` | The domain's current curator insight |
+| `{{seoTitle}}` | Current SEO title |
+| `{{seoDescription}}` | Current SEO description |
+| `{{categoryName}}` | Name of the current category (category prompts) |
+| `{{categoryDomains}}` | List of domains in the current category |
+| `{{title}}` | Post title (post prompts) |
+| `{{brief}}` | Post brief (post prompts) |
+| `{{additionalContext}}` | Post additional context (post prompts) |
+| `{{excerpt}}` | Post excerpt (post prompts) |
+| `{{relatedDomains}}` | Related domains on the post (post prompts) |
+| `{{allPostCategories}}` | Full list of blog post categories |
+| `{{aiPersona}}` | Your AI Writing Persona from AI Settings — injected into all prompts automatically |
+| `{{siteName}}` | Your site name from General Settings |
+| `{{siteDescription}}` | Your site description from AI Settings |
+
+## Prompt list
+
+The following prompt types are seeded at setup. One row per generation feature:
+
+**Domain prompts**
+
+| Type slug | What it generates |
+|---|---|
+| `domain-all` | All domain fields in one pass (description, tagline, emoji, categories, use cases, perfect match, brand color) |
+| `domain-seo` | SEO title and description |
+| `domain-description` | Long description |
+| `domain-tagline` | One-line tagline |
+| `domain-emoji` | Emoji |
+| `domain-short-description` | Short description for cards |
+| `domain-curator-insight` | Editorial curator quote |
+| `domain-use-cases` | Use case list |
+| `domain-perfect-match` | Ideal buyer persona paragraph |
+| `domain-brand-color` | Hex brand color |
+| `domain-categorization` | Primary and additional category assignment |
+| `domain-logo-image` | Image generation prompt for the domain logo |
+| `domain-background-image` | Image generation prompt for the domain page background |
+
+**Category prompts**
+
+| Type slug | What it generates |
+|---|---|
+| `category-description` | Category description |
+| `category-curator-insight` | Category curator insight |
+| `category-seo-text` | SEO text block below the domain grid |
+| `category-theme-colors` | Theme color hex value |
+| `category-seo` | SEO title and description |
+
+**Post prompts**
+
+| Type slug | What it generates |
+|---|---|
+| `post-title` | Blog post title |
+| `post-tags` | Post tag suggestions |
+| `post-excerpt` | Post excerpt |
+| `post-content` | Full post body |
+| `post-cover-image` | Full cinematic image generation prompt for the post cover |
+| `post-image-prompt` | Short image prompt stored in the Image Prompt field |
+| `post-categorization` | Post category assignment |
+| `post-seo` | Post SEO title and description |
+
+**Page prompts**
+
+| Type slug | What it generates |
+|---|---|
+| `page-seo` | SEO title and description for CMS pages (Pages collection) |
+| `static-page-seo` | SEO title and description for static template pages (Home, Categories, Blog) |
+
+## Customizing prompts
+
+Open any prompt row to edit the template. Each row has:
+
+- **Type Slug** — do not change this, it's how the system finds the prompt
+- **Label** — human-readable name shown in the admin
+- **Prompt Template** — the actual instruction text. Edit freely.
+- **Max Tokens** — override the global max tokens for this specific prompt. Leave blank to use the global setting.
+- **Notes** — your own notes on how to tune this prompt. Not sent to the AI.
+
+<Warning>
+  Do not delete prompt entries and do not change the Type Slug. The generation system looks up prompts by slug — a missing or renamed slug silently falls back to a generic prompt with no customization.
+</Warning>
+
+<Note>
+  New prompt types added in platform updates are added non-destructively — only missing slugs are inserted, your existing templates are never overwritten. On Vercel this happens automatically during deployment. On Docker, run `npx tsx --env-file=.env scripts/seed-prompts.ts` from the project directory after updating.
+</Note>

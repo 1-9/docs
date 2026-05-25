@@ -1,0 +1,46 @@
+---
+title: "SEO Settings"
+description: "Default OG image, title format, sold domain display, and search engine verification."
+---
+
+**Settings → SEO** controls site-wide SEO defaults and how sold domains appear publicly.
+
+## Default OG image
+
+The image used in link previews (social shares, messaging apps) when a page has no specific OG image set. Affects the homepage, the `/categories` index, and any page without a custom OG image.
+
+Recommended size: 1200×630 px.
+
+## Title Separator
+
+The character between the page title and site name in the browser tab and search results. Choose the one that matches your style:
+
+| Option | Example |
+|---|---|
+| ` \| ` | `sell.beer \| My Domain Portfolio` |
+| ` — ` | `sell.beer — My Domain Portfolio` |
+| ` · ` | `sell.beer · My Domain Portfolio` |
+| ` - ` | `sell.beer - My Domain Portfolio` |
+
+## Sold domain pages
+
+Controls what happens to domain pages after a domain is marked as sold:
+
+| Option | What visitors see |
+|---|---|
+| **Hidden** | Page exists but is not indexed (`noindex`). Only accessible via direct link. |
+| **Trophy page** | Page is indexed and shows a "sold" banner. Good for social proof — proves your track record. |
+| **Listed** | Domain appears at the end of inventory lists with a "Sold" badge. Fully indexed. |
+
+When **Trophy page** or **Listed** is selected, you can customize the sold banner text shown on those pages.
+
+## Search engine verification
+
+Paste the verification codes from Google Search Console and Bing Webmaster Tools. These are injected as `<meta>` tags in the site `<head>` — no file upload needed.
+
+| Field | Where to get it |
+|---|---|
+| **Google Search Console Verification** | Search Console → Add property → HTML tag method → copy the `content` value |
+| **Bing Webmaster Verification** | Bing Webmaster Tools → Add site → HTML Meta Tag method → copy the `content` value |
+
+Enter only the value of the `content` attribute, not the full `<meta>` tag. Example: `google-site-verification=AbCdEfGhIjKlMnOpQrStUvWxYz`.

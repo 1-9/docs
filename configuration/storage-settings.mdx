@@ -1,0 +1,64 @@
+---
+title: "Storage Settings"
+description: "Configure Cloudflare R2 for image uploads, media storage, and database backups."
+---
+
+**Settings → Storage** connects the platform to Cloudflare R2 for image storage. Without storage configured, the site works fully — you just can't upload images (domain logos, background images, blog post images, or the site logo).
+
+Cloudflare R2 is the only officially supported storage provider. It has no egress fees and a generous free tier.
+
+## Setting up R2
+
+Before filling in the settings, you need a bucket and API credentials in Cloudflare:
+
+<Steps>
+  <Step title="Create a bucket">
+    In the Cloudflare dashboard, go to **R2 → Create bucket**. Give it a name (e.g. `my-domainer-media`). Note the bucket name — you'll enter it below.
+  </Step>
+
+  <Step title="Enable public access">
+    Open the bucket → **Settings** → **Public access**. Either enable the `r2.dev` subdomain or connect your own custom domain (e.g. `media.example.com`). This gives you the **Public URL** needed below.
+  </Step>
+
+  <Step title="Create an API token">
+    Go to **R2 → Manage API Tokens** → **Create API Token**. Set permissions to **Object Read & Write** and scope it to the bucket you created. Copy both the **Access Key ID** and **Secret Access Key** — the secret is shown only once.
+  </Step>
+
+  <Step title="Fill in Storage Settings">
+    Enter the values in **Settings → Storage** and save.
+  </Step>
+</Steps>
+
+## Fields
+
+The settings form has two groups. Fields in the first group require a server restart to take effect. Fields in the second group apply immediately after saving.
+
+**Requires server restart after saving:**
+
+| Field | Description |
+|---|---|
+| **Bucket Name** | The name of your R2 bucket |
+| **Account ID** | Found in Cloudflare Dashboard → R2 → Overview. Used to build the S3 endpoint URL automatically. |
+
+**Applies immediately:**
+
+| Field | Description |
+|---|---|
+| **Access Key ID** | From the R2 API token you created |
+| **Secret Access Key** | From the R2 API token. Stored securely — not visible after saving. |
+| **Public URL (CDN base)** | Base URL for serving files publicly. Use your custom domain (e.g. `https://media.example.com`) or the `r2.dev` URL. |
+| **Backup Bucket** | Optional. A separate private bucket for database backups. Should have no public domain attached. |
+
+<Note>
+  On Vercel, the server restarts automatically on redeploy. After changing the Bucket Name or Account ID, trigger a redeploy from the Vercel dashboard for the new values to take effect.
+
+  On Docker, restart the container after changing these fields: `docker compose -f docker-compose.hub.yml up -d`.
+</Note>
+
+## Database backups
+
+When a **Backup Bucket** is configured, the **Create Backup** button in Storage Settings exports your entire database as a JSON file and uploads it to the backup bucket. Download the file from R2 and keep a local copy before any major change.
+
+<Warning>
+  Back up your database before updating the platform. Open **Settings → Storage**, click **Create Backup**, and download the file before proceeding.
+</Warning>

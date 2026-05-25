@@ -1,0 +1,64 @@
+---
+title: "CMS Pages"
+description: "Create and manage custom pages using the page builder."
+---
+
+Go to **Domains → Pages** in the admin panel to manage your CMS pages.
+
+Pages are flexible, builder-based pages that sit at top-level slugs like `/about`, `/contact`, or `/how-it-works`. They use the same block system as the homepage — any block available there is also available on pages.
+
+---
+
+## Creating a page
+
+Click **Create New** in the Pages list. Fill in:
+
+| Field | Description |
+|---|---|
+| **Title** | Page heading, shown as the `<h1>` on the public page. Required. |
+| **Slug** | URL path. Auto-generated from the title but editable. A page with slug `about` is live at `/about`. |
+| **Subheading** | Optional subtitle shown below the H1. |
+| **Status** | **Published** (live) or **Draft** (not visible on the public site). |
+| **Sections** | The block-based content of the page. See [Page Builder](/content/page-builder). |
+
+### Reserved slugs
+
+The following slugs are reserved by the platform and cannot be used for CMS pages:
+
+| Slug | Used for |
+|---|---|
+| `home` | Homepage |
+| `blog` | Blog index |
+| `categories` | Categories index |
+| `domains` | Domains inventory |
+| `install` | Setup Wizard |
+
+Trying to save a page with one of these slugs will show a validation error. Use a different slug — for example `about-us` instead of `home`.
+
+---
+
+## Building the page
+
+The **Sections** field is where you compose the page. Add blocks in any order by clicking **Add Block** and choosing a block type.
+
+Every block is a self-contained section — a hero, a text area, a FAQ, a form, a CTA. Rearrange them by dragging the handle on the left. Remove any block with the delete icon.
+
+For the full block reference — fields, options, and use cases for each of the 23 block types — see [Page Builder](/content/page-builder).
+
+---
+
+## SEO
+
+Each page has an SEO tab powered by the SEO plugin. Fill in the **SEO Title** and **SEO Description** manually, or use the **Generate SEO** AI button to generate them from the page content.
+
+The AI button is only available if AI is configured in **Settings → AI**.
+
+---
+
+## Publishing
+
+A page with **Status: Published** is live as soon as you save. There is no separate publish toggle. To take a page offline without deleting it, set the status back to **Draft**.
+
+<Note>
+  The homepage, blog, and categories pages are not CMS pages — they are controlled by their own templates under **Templates** in the admin nav. See [Templates](/content/templates).
+</Note>

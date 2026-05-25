@@ -1,0 +1,101 @@
+---
+title: "Notification Settings"
+description: "Configure email alerts via Resend, Telegram push notifications, and the Brevo newsletter form."
+---
+
+**Settings → Notifications** controls three independent notification channels. Each has its own enable toggle — you can use one, two, or all three.
+
+## Email notifications (Resend)
+
+Resend sends transactional emails when deals arrive and when you update buyers on their offers.
+
+### Setup
+
+1. Sign up at [resend.com](https://resend.com) and create an API key
+2. Verify your sending domain in the Resend dashboard — unverified domains deliver unreliably
+3. Enable **Email Notifications Enabled** and fill in the credentials:
+
+| Field | Description |
+|---|---|
+| **Resend API Key** | Your API key from the Resend dashboard |
+| **From Email** | The address emails are sent from, e.g. `hello@example.com`. Must be a verified sender in Resend. |
+| **Admin Email** | Where admin-facing alerts are delivered (new inquiries, new offers, form submissions) |
+
+### Admin alerts
+
+Emails sent to your admin address when activity occurs on the site:
+
+- New inquiry received
+- New offer received
+- Form submission received (from Page Builder forms)
+
+### Buyer notifications
+
+Emails sent to the buyer when you take action on their offer:
+
+- Counter offer sent
+- Offer accepted
+- Offer rejected
+
+Disable any of these individually if you prefer to handle buyer communication manually.
+
+### Price drop alerts
+
+**Price drop alert** — sent to subscribers when a domain's price drops below their tracked price. Requires the Brevo newsletter integration to be enabled for visitors to subscribe.
+
+### Expiry reminders
+
+**Domain expiry reminder** — sent to your admin email when a domain's expiry date is approaching.
+
+Enable the **Expiry reminder cron** checkbox and set how many days before expiry to send the alert (default: 30 days). The cron endpoint `/api/cron/expiry-check` must be scheduled externally — see [Deploy with Docker](/getting-started/deploy-docker#scheduled-jobs-optional) or the Vercel deployment guide where it runs automatically.
+
+---
+
+## Telegram notifications
+
+Get instant push notifications in Telegram when deals arrive. Setup takes about 2 minutes.
+
+### Setup
+
+1. Open Telegram and start a conversation with [@BotFather](https://t.me/BotFather)
+2. Send `/newbot` and follow the prompts — BotFather gives you a bot token
+3. Enable **Telegram Notifications Enabled** and enter the token
+4. Click **Detect Chat ID** — send any message to your bot, then click the button. Your chat ID fills in automatically.
+
+| Field | Description |
+|---|---|
+| **Telegram Bot Token** | Token from @BotFather |
+| **Telegram Chat ID** | Your personal chat ID. Use the Detect button to fill it automatically. |
+
+### Available events
+
+- New inquiry received
+- New offer received
+- Form submission received
+- Domain expiry reminder
+- **Daily digest** — a summary of the day's inquiries and offers, sent once per day via `/api/cron/daily-digest`
+
+---
+
+## Newsletter form (Brevo)
+
+Enabling Brevo does two things: it shows a newsletter subscription form in the site footer, and it enables the **Price Monitoring** widget on domain pages — visitors can subscribe to get an email if a domain's price drops.
+
+Subscribers are added to your Brevo contact list. No email addresses are stored locally in the platform database.
+
+### Setup
+
+1. Sign up at [brevo.com](https://brevo.com) and create an API key under **Account → SMTP & API**
+2. Create a contact list in Brevo and note the list ID (an integer)
+3. Enable **Newsletter Footer Form Enabled** and fill in the fields
+
+| Field | Description |
+|---|---|
+| **Newsletter Form Title** | Heading above the subscription form in the footer. Default: `Stay ahead of the market` |
+| **Newsletter Form Subtitle** | Subheading below the title. Default: `Join Our Newsletter` |
+| **Brevo API Key** | Your Brevo API key |
+| **Brevo List ID** | The contact list ID where subscribers are added |
+
+<Warning>
+  Pricing, free tier limits, and terms for Resend and Brevo change over time. Verify current conditions directly on their websites before committing to a plan.
+</Warning>

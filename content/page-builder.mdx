@@ -1,0 +1,341 @@
+---
+title: "Page Builder Blocks"
+description: "Reference for all 23 content blocks available on pages, templates, and the homepage."
+---
+
+Blocks are the building material for every page. Add them from the **Sections** field on any page or template, drag to reorder, and configure each one independently.
+
+Every block has an optional **Spacing** field (top and bottom padding: none / xs / sm / md / lg / xl / 2xl) that controls the vertical rhythm of the page.
+
+---
+
+## Content blocks
+
+### Banner
+
+A full-width notification strip. Optionally dismissible.
+
+| Field | Options / Notes |
+|---|---|
+| **Content** | Rich text message |
+| **Style** | info · success · warning · promo |
+| **Dismissible** | Visitor can close the banner |
+| **CTA Button** | Optional — enable, then set label and URL |
+
+---
+
+### Text
+
+A rich text content section.
+
+| Field | Options / Notes |
+|---|---|
+| **Content** | Rich text — headings, lists, links, inline images |
+| **Max Width** | narrow · normal · wide |
+| **Use Background** | Wraps the text in a surface card with border and padding |
+
+---
+
+### Text + Image
+
+Side-by-side text and image with an optional CTA button.
+
+| Field | Options / Notes |
+|---|---|
+| **Heading** | Optional heading |
+| **Content** | Rich text |
+| **Image** | Media library image |
+| **Image Position** | left · right |
+| **CTA Button** | Optional — enable, then set label and URL |
+
+---
+
+### Manifesto
+
+A large, full-width statement or mission section.
+
+| Field | Options / Notes |
+|---|---|
+| **Heading** | Required |
+| **Content** | Rich text |
+| **Background** | default · dark · primary |
+| **Alignment** | left · center |
+
+---
+
+### CTA
+
+A call-to-action section with one or two buttons.
+
+| Field | Options / Notes |
+|---|---|
+| **Heading** | Required |
+| **Text** | Supporting copy |
+| **Background** | default · primary · muted |
+| **Primary Button** | Label and URL — required |
+| **Secondary Button** | Optional — enable to show a second button |
+
+---
+
+### Features
+
+A feature list in cards, list rows, or icon-only layout.
+
+| Field | Options / Notes |
+|---|---|
+| **Heading** | Optional |
+| **Style** | cards · list · icons-only |
+| **Items** | Each item: image (optional), icon (Lucide icon name, shown when no image), title, description |
+
+To use an icon, type the Lucide icon name in the **Icon** field — for example `Zap`, `Globe`, `CheckCircle`. Icons are pulled from the lucide-react library.
+
+---
+
+### Steps
+
+A numbered step-by-step process guide.
+
+| Field | Options / Notes |
+|---|---|
+| **Heading** | Optional |
+| **Subheading** | Optional |
+| **Layout** | horizontal · vertical |
+| **Columns** | 3 · 4 |
+| **Card Style** | Controls the step card appearance |
+| **Steps** | Each step: image (optional), icon (Lucide name), title, description |
+
+---
+
+### FAQ
+
+Frequently asked questions in accordion or expanded layout.
+
+| Field | Options / Notes |
+|---|---|
+| **Heading** | Optional |
+| **Layout** | accordion (collapsed by default) · all-open (all expanded) |
+| **Items** | Each item: question (required), answer (required) |
+
+---
+
+### Stats
+
+Statistics display — either pulled from your live database or set manually.
+
+| Field | Options / Notes |
+|---|---|
+| **Heading** | Optional |
+| **Mode** | **dynamic** — counts domains, categories, and posts from your DB automatically. **manual** — enter your own values. |
+| **Items** | Manual mode only — each item: value, label, optional description |
+
+---
+
+### Testimonials
+
+Customer or client reviews.
+
+| Field | Options / Notes |
+|---|---|
+| **Heading** | Optional |
+| **Layout** | grid · carousel |
+| **Items** | Each item: quote (required), name (required), role, avatar image, star rating (1–5) |
+
+---
+
+### Pricing
+
+A pricing tiers table for service or subscription pricing.
+
+| Field | Options / Notes |
+|---|---|
+| **Heading** | Optional |
+| **Subheading** | Optional |
+| **Items** | Each tier: name, price, period, description, features list (each feature: text, included toggle), CTA label, CTA URL, **Highlighted** toggle for the recommended tier |
+
+---
+
+### Video
+
+An embedded or uploaded video.
+
+| Field | Options / Notes |
+|---|---|
+| **Heading** | Optional |
+| **Source** | youtube · vimeo · upload |
+| **URL** | YouTube or Vimeo URL (when source is youtube/vimeo) |
+| **File** | Uploaded video file (when source is upload) |
+| **Aspect Ratio** | 16:9 · 4:3 · 1:1 |
+| **Autoplay** | Autoplay on load (muted) |
+| **Caption** | Optional caption below the video |
+
+---
+
+### Form
+
+Embeds a form built with the Form Builder.
+
+| Field | Options / Notes |
+|---|---|
+| **Heading** | Optional |
+| **Subheading** | Optional |
+| **Form** | Choose an existing form from the Forms collection |
+| **Side Content** | Optional rich text shown alongside the form |
+| **Success Message** | Custom message shown after submission |
+
+Forms are created separately in **Domains → Forms**. Build your form there, then reference it here.
+
+---
+
+### Spacer
+
+A vertical gap between blocks.
+
+| Field | Options / Notes |
+|---|---|
+| **Size** | xs · sm · md · lg · xl · 2xl |
+| **Show Divider** | Adds a horizontal line through the middle of the space |
+
+---
+
+## Domain inventory blocks
+
+### Domain Grid
+
+An interactive, filterable, and sortable grid of domain cards.
+
+| Field | Options / Notes |
+|---|---|
+| **Heading** | Optional |
+| **Subheading** | Optional |
+| **Count** | 6–48 domains |
+| **Filter By** | all · category · featured · recent |
+| **Category** | Visible when Filter By is category — choose a category |
+| **Columns** | Grid columns |
+| **Show Filters** | Show the filter bar above the grid |
+| **Show Sort** | Show the sort dropdown |
+| **Default Sort** | Initial sort order |
+| **Button Label / URL** | Optional "see more" button below the grid |
+
+---
+
+### Inventory Spotlight
+
+A curated showcase grid — auto-selected or manually picked domains.
+
+| Field | Options / Notes |
+|---|---|
+| **Heading** | Optional |
+| **Subheading** | Optional |
+| **Mode** | featured · recent · random · manual |
+| **Count** | 3–24 domains |
+| **Category** | Filter by category (auto modes) |
+| **Manual Domains** | Visible when mode is manual — pick specific domains |
+| **Columns** | Grid columns |
+| **Show Total Count** | Show total portfolio size below the grid |
+| **Button Label / URL** | Optional link button |
+
+---
+
+### Featured Domain Card
+
+A single large highlight card for one specific domain.
+
+| Field | Options / Notes |
+|---|---|
+| **Domain** | Required — pick one domain |
+| **View Details Label** | Button label. Default: "View Details" |
+| **Footer Note** | Optional small text below the card |
+
+---
+
+### Ticker Tape
+
+A horizontal scrolling marquee of domain names.
+
+| Field | Options / Notes |
+|---|---|
+| **Mode** | recent · featured · random · manual |
+| **Count** | 5–100 domains |
+| **Manual Domains** | Visible when mode is manual |
+| **Badge Label** | Label shown on each domain badge |
+| **Speed** | Scroll speed |
+| **Direction** | left · right |
+| **Pause on Hover** | Pause scrolling when visitor hovers |
+
+---
+
+### Category Grid
+
+A grid of category cards.
+
+| Field | Options / Notes |
+|---|---|
+| **Heading** | Optional |
+| **Subheading** | Optional |
+| **Count** | 4–24 categories |
+| **Columns** | 2 · 3 · 4 |
+| **Show Count** | Show number of domains per category |
+
+---
+
+### Blog Grid
+
+A grid of recent blog posts.
+
+| Field | Options / Notes |
+|---|---|
+| **Heading** | Optional |
+| **Subheading** | Optional |
+| **Count** | 3–12 posts |
+| **Filter By** | recent · category |
+| **Category** | Visible when Filter By is category |
+| **Layout** | grid · list |
+| **Button Label / URL** | Optional "read more" button |
+
+---
+
+## Brand blocks
+
+### Logos
+
+A partner or client logo strip.
+
+| Field | Options / Notes |
+|---|---|
+| **Heading** | Optional |
+| **Grayscale** | Show logos in grayscale |
+| **Items** | Each item: logo image (required), label, URL |
+
+---
+
+### Marketplaces Strip
+
+A strip of marketplace or payment provider logos.
+
+| Field | Options / Notes |
+|---|---|
+| **Heading** | Optional |
+| **Subheading** | Optional |
+| **Items** | Each item: logo image, label (required), URL |
+
+---
+
+## Hero block
+
+### Hero
+
+The full-width page hero — large heading, background image, CTA button, and an optional AI domain matcher chat widget.
+
+The Hero block is available on the **Homepage** and on **CMS Pages**. It is not available on other templates.
+
+| Field | Options / Notes |
+|---|---|
+| **Heading** | Required |
+| **Subheading** | Optional |
+| **Background Image** | Optional background |
+| **CTA** | Optional button — label and URL |
+| **AI Matcher** | Enable to show a chat widget that suggests domains. Fields: enabled, title, description, placeholder, content, system prompt |
+
+<Note>
+  The AI Matcher widget requires AI to be configured in **Settings → AI**. It uses its own system prompt field — customize it to describe how the matcher should respond.
+</Note>

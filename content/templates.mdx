@@ -1,0 +1,157 @@
+---
+title: "Templates"
+description: "Control the layout of the homepage, domain pages, category pages, categories index, and blog."
+---
+
+**Templates** in the admin nav gives you layout control over the five main page types in the platform. Each template has its own settings — drag blocks to reorder, enable or disable modules, and customize headings.
+
+Templates are different from [CMS Pages](/content/pages). A CMS page is a one-off page you create and manage individually. A template is a shared layout that applies to every page of that type — every domain page follows the Domain template, every category page follows the Category template, and so on.
+
+---
+
+## Home
+
+**Templates → Home**
+
+The homepage is built entirely from blocks. There is no fixed layout — add any combination of blocks and arrange them in any order.
+
+| Field | Description |
+|---|---|
+| **Sections** | Block list. Start with a Hero block, then add any inventory, content, or brand blocks. |
+| **Page Purpose** | A textarea describing the page's goals and audience. Used by AI when generating SEO metadata. |
+
+The [Hero block](/content/page-builder#hero-block) is only available on the homepage and CMS pages. It is not available on other templates.
+
+---
+
+## Domain
+
+**Templates → Domain**
+
+Controls the layout of every domain detail page (`/domains/{name}`). The domain page has four distinct zones:
+
+| Zone | Description |
+|---|---|
+| **Above** | Full-width blocks rendered before the domain header. Place the **Domain Hero** module here for the sticky scroll effect on domain names. |
+| **Left Column** | The main content column. Domain modules (Curator's Insight, Use Cases, etc.) go here. |
+| **Right Column** | The sticky sidebar. The price/offer panel is always shown at the top of the right column regardless of configuration — it is not a configurable block. |
+| **Below** | Full-width blocks rendered after the main content area. |
+
+### Price Sidebar Settings
+
+Before the zone layout, there is a **Price Sidebar Settings** group that controls the text shown in the price/offer panel that appears at the top of every domain page sidebar:
+
+| Field | Default |
+|---|---|
+| **Price Heading** | Asking Price |
+| **Price Subtext** | Secure payment & seamless transfer. |
+| **Make Offer — Heading** | Make an Offer |
+| **Make Offer — Subheading** | (empty) |
+| **Make Offer — Button Text** | Submit Offer |
+| **Inquiry Form — Heading** | Ask a Question |
+| **Inquiry Form — Button Text** | Send Message |
+| **Marketplaces — Heading** | Listed On |
+| **Marketplaces — Subheading** | (empty) |
+
+<Note>
+  When a domain has no price set, the inquiry heading automatically changes to "Request Price" regardless of what's configured in the Inquiry Form Heading field.
+</Note>
+
+### Domain modules
+
+The following modules are specific to domain pages and can be placed in the Left Column, Right Column, Above, or Below zones:
+
+| Module | Shows |
+|---|---|
+| **Domain Hero** | Large sticky domain name header. Best placed in the Above zone. |
+| **Curator's Insight** | The curator quote from the domain record. |
+| **Use Cases** | Numbered list of use cases. |
+| **Perfect Match For** | Ideal buyer persona paragraph. |
+| **Technical Dossier** | RDAP data: registrar, dates, name servers, transfer type. Has a **Hide young dates** option to suppress dates for recently registered domains. |
+| **Branding Playground** | Brand color preview widget. |
+| **Similar Domains** | Grid of up to 4 related domains from the domain's Similar Domains field. |
+| **Split Row** | Two modules side by side in a 2-column layout. Choose which module goes left and which goes right. |
+
+### Sidebar widgets
+
+These widgets are available in all zones. They are most useful in the Right Column:
+
+| Widget | Shows |
+|---|---|
+| **Make an Offer Form** | Offer submission form. Rendered only when the domain's sale model allows offers. |
+| **Inquiry Form** | Contact/inquiry form. |
+| **Track Price Form** | Price drop alert subscription form. Only visible when Brevo is enabled in Notification Settings. |
+| **Marketplace Buttons** | Links to Afternic, Sedo, Atom, SAW, and custom marketplaces enabled on the domain. |
+| **Transfer Info** | A short transfer process explainer. |
+
+### General blocks
+
+All standard [Page Builder blocks](/content/page-builder) can also be added to domain pages — CTA, Text, Features, FAQ, Video, Form, and others. These are prefixed with `·` in the block picker to distinguish them from domain-specific modules.
+
+---
+
+## Category
+
+**Templates → Category**
+
+Controls the layout around the domain grid on every category page (`/categories/{slug}`). Has two zones:
+
+| Zone | Description |
+|---|---|
+| **Above** | Blocks rendered above the domain grid. |
+| **Below** | Blocks rendered below the domain grid. |
+
+Category-specific modules available in both zones:
+
+| Module | Shows |
+|---|---|
+| **Curator Insight** | The category curator insight text from the category record. |
+| **SEO Text** | The SEO text block from the category record. Has max-width (narrow/normal/wide) and Use Background options. |
+
+All general page builder blocks are also available.
+
+---
+
+## Categories
+
+**Templates → Categories**
+
+Controls extra blocks on the `/categories` index page (the grid listing all categories). Has two zones:
+
+| Zone | Description |
+|---|---|
+| **Above** | Blocks rendered above the category grid. |
+| **Below** | Blocks rendered below the category grid. |
+
+Only general page builder blocks are available here — no category-specific modules.
+
+**Page Purpose** — textarea for AI SEO generation context.
+
+---
+
+## Blog
+
+**Templates → Blog**
+
+Controls extra blocks on the `/blog` index page. Has two zones:
+
+| Zone | Description |
+|---|---|
+| **Above** | Blocks rendered below the hero carousel and above the posts heading. |
+| **Below** | Blocks rendered below the post list. |
+
+Blog-specific module available in both zones:
+
+| Module | Fields |
+|---|---|
+| **About This Blog** | Title and a textarea for a short description of the blog. |
+
+All general page builder blocks are also available.
+
+**Page Purpose** — textarea for AI SEO generation context.
+
+---
+
+## How changes take effect
+
+Template changes apply to all pages of that type immediately after saving. There is no per-domain or per-category override — the template is global. Changes are cached and propagated to the public site automatically.

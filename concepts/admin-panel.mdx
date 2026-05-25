@@ -1,0 +1,72 @@
+---
+title: "Admin Panel"
+description: "How the Domainer Engine admin panel is organized and how to navigate it."
+---
+
+The admin panel is your control center. Access it at `https://example.com/admin` — use the account you created during the Setup Wizard.
+
+## Navigation modes
+
+The sidebar has three distinct modes that switch automatically as you move between sections. You can also switch them manually using the icons at the bottom of the sidebar.
+
+### Main — everyday work
+
+The default view. Organized into four groups:
+
+| Group | Items |
+|---|---|
+| **Domains** | Domains, Categories |
+| **Content** | Pages, Posts, Post Categories, Media, Templates |
+| **Transactions** | Inquiries, Offers, Orders, Price Trackers |
+| **System** | Analytics, Users, Forms, Form Submissions, Navigation, Settings, Need help? |
+
+**Templates** and **Settings** are not standalone pages — clicking them switches the sidebar into their respective modes.
+
+### Settings — global configuration
+
+Reached via **Settings** in the System group. Contains all site-wide configuration:
+
+| Item | What it controls |
+|---|---|
+| **General** | Site name, tagline, logo, favicon, contact info, social links |
+| **Appearance** | Theme (dark/light), accent colors, card layout, fonts, border radius |
+| **SEO** | Default OG image, title separator, sold domain display, Google/Bing verification |
+| **AI** | Provider, API key, model, generation settings |
+| **Prompts** | AI prompt templates for all generation types |
+| **Notifications** | Email (Resend), Telegram, and newsletter (Brevo) settings |
+| **Storage** | Cloudflare R2 credentials and bucket configuration |
+| **Tracking** | Own analytics toggle, GA4 integration, cookie banner |
+
+Click the back arrow in the sidebar to return to the main menu.
+
+### Templates — page layout control
+
+Reached via **Templates** in the Content group. Controls how each type of public page is laid out:
+
+| Template | What it controls |
+|---|---|
+| **Home** | Block layout of the homepage |
+| **Domain** | Module order and visibility on every domain detail page |
+| **Category** | Block layout of category pages |
+| **Categories** | Block layout of the `/categories` index page |
+| **Blog** | Block layout of the blog index and category filter pages |
+
+Templates use a drag-and-drop block system — see [Page Builder](/configuration/page-builder) for details.
+
+## Dashboard
+
+The dashboard opens automatically when you log in. It shows:
+
+- **Since Last Login** — new inquiries, offers, and page views since your previous session
+- **KPIs** — total domains, available domains, page views, and unique visitors for the selected period
+- **Chart** — daily traffic for the last 7 or 30 days
+- **Top Domains** — highest-traffic domain pages in the period
+- **Sources & Countries** — referrer breakdown and visitor geography
+
+The time period selector in the top right applies to KPIs, the chart, and top domains simultaneously.
+
+For a full breakdown of any individual domain, open the domain record and scroll to the **Analytics** section at the bottom of the form.
+
+<Note>
+  The "Since Last Login" block shows activity from the last 24 hours.
+</Note>

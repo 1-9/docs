@@ -1,0 +1,88 @@
+---
+title: "Blog"
+description: "Write and publish blog posts with AI generation, cover images, and category filtering."
+---
+
+Go to **Domains → Posts** in the admin panel to manage blog posts.
+
+The blog lives at `/blog`. Posts are published at `/blog/{slug}`. Posts support full rich text, AI-generated content, cover images, and categories.
+
+---
+
+## Creating a post
+
+Click **Create New** in the Posts list.
+
+### Identity
+
+| Field | Description |
+|---|---|
+| **Title** | Post title. Required. |
+| **Slug** | URL path, auto-generated from the title. A post titled "The Best .AI Domains" gets slug `the-best-ai-domains` and lives at `/blog/the-best-ai-domains`. Editable — lock it manually once the post is live to prevent broken links. |
+| **Status** | **Published** (live) or **Draft** (not visible on the public site). |
+| **Featured** | Featured posts appear in the hero carousel at the top of the blog index. |
+
+### Content
+
+| Field | Description |
+|---|---|
+| **Cover Image** | The post's featured image. Shown on the post card and at the top of the post. AI can generate an image prompt for it — see below. |
+| **Image Prompt** | Stores the AI-generated prompt used to create the cover image. Informational — not shown publicly. |
+| **Brief** | A short description of what the post is about. Used as context for AI generation. |
+| **Additional Context** | Extra background information for the AI — brand voice notes, key points to cover, specific angles. Not shown publicly. |
+| **Content** | The full post body in rich text. |
+| **Excerpt** | Short summary shown on post cards. If left empty, the first paragraph of the content is used. |
+| **Read Time** | Auto-calculated from word count at 200 words per minute. Not editable. |
+
+### Organization
+
+| Field | Description |
+|---|---|
+| **Post Category** | Assign a category from the **Post Categories** collection. Categories appear as a filter on the blog index. |
+| **Tags** | Free-form tags for this post. |
+| **Related Domains** | Link up to a few domains mentioned or relevant to this post. They appear as a related domains block at the end of the post. |
+
+---
+
+## AI generation
+
+Once the post is saved, AI buttons appear in the sidebar:
+
+- **Generate All** — generates title, tags, excerpt, and the full post body in one pass
+- **Generate SEO** — generates SEO title and description
+
+Individual **↺** buttons next to each AI-generated field let you regenerate just that field.
+
+AI generation uses the **Brief** and **Additional Context** fields as input. Write a clear brief before generating — the more specific you are, the better the output.
+
+AI generation never saves automatically. Review everything in the fields and click **Save** to apply.
+
+<Note>
+  AI generation requires a provider and API key configured in **Settings → AI**. If AI is disabled or unconfigured, the generate buttons are hidden.
+</Note>
+
+---
+
+## Cover image
+
+The **Cover Image** field stores the actual image file (uploaded to media or from media library).
+
+The **Image Prompt** field stores a text description of the image — useful if you plan to generate the cover with an image generation tool. Click the **Generate Cover Image Prompt** button (↺ next to the Image Prompt field) to have AI write a cinematic image generation prompt based on your post content.
+
+You can then paste that prompt into Midjourney, DALL-E, or any other image generator, create the image, and upload it to the Cover Image field.
+
+---
+
+## Post categories
+
+Post categories (used by the blog) are separate from domain categories. They are managed in **Domains → Post Categories** and only affect how posts are filtered on the blog index — they do not create public `/categories/` pages like domain categories do.
+
+Create a post category first, then assign it to posts via the **Post Category** field.
+
+---
+
+## Publishing
+
+A post with **Status: Published** is live immediately after saving. Set it back to **Draft** to take it offline without deleting it.
+
+Featured posts appear in the hero carousel on the blog index. The carousel shows the most recently featured posts — use the **Featured** checkbox on the posts you want to highlight.

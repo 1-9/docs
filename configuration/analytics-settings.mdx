@@ -1,0 +1,50 @@
+---
+title: "Analytics Settings"
+description: "Configure the built-in analytics tracker and Google Analytics 4 integration."
+---
+
+**Settings → Tracking** controls two independent analytics systems. You can use one, both, or neither.
+
+## Built-in analytics
+
+The platform includes its own privacy-first analytics tracker. It records page views, visitor counts, referrer sources, countries, and device types — all server-side, without cookies.
+
+| Field | Description |
+|---|---|
+| **Enable own analytics tracker** | Master switch. On by default. |
+
+No setup required beyond the toggle. Data is visible in the **Analytics** section of the admin dashboard and on individual domain pages.
+
+**Privacy characteristics:**
+- No cookies used
+- Visitor identity is derived from a salted hash — no raw IP addresses stored
+- GDPR-compliant by design — no cookie banner needed for built-in analytics alone
+
+Results appear in the admin Dashboard and in the Analytics tab on each domain's edit page.
+
+## Google Analytics 4
+
+Connect a GA4 property to get Google's reporting alongside the built-in tracker.
+
+| Field | Description |
+|---|---|
+| **Enable Google Analytics 4** | Loads the GA4 script after visitor consent. |
+| **GA4 Measurement ID** | Your property ID, e.g. `G-XXXXXXXXXX`. Found in Google Analytics → Admin → Data Streams. |
+
+<Note>
+  GA4 requires visitor consent before loading. Enabling GA4 automatically activates the cookie banner on the public site.
+</Note>
+
+### Cookie banner
+
+When GA4 is enabled, a cookie consent banner is shown to visitors on their first visit. The GA4 script loads only after the visitor clicks **Accept**.
+
+Customize the banner text to match your site's tone:
+
+| Field | Default |
+|---|---|
+| **Banner text** | `We use analytics to improve your experience.` |
+| **Accept button** | `Accept` |
+| **Decline button** | `Decline` |
+
+If the visitor declines, the GA4 script is never loaded. The built-in analytics tracker is unaffected — it runs regardless of consent since it uses no cookies.

@@ -1,0 +1,120 @@
+---
+title: "Setup Wizard"
+description: "A walkthrough of every step in the Domainer Engine Setup Wizard — what to fill in, what you can skip, and what happens at launch."
+---
+
+The Setup Wizard runs automatically the first time you open your site after deployment. It walks you through the minimum configuration needed to go live, then seeds your database with categories, prompt templates, base pages, and navigation defaults.
+
+The wizard has 10 steps: three configuration forms, six informational onboarding screens, and a launch step.
+
+[SCREENSHOT: The Setup Wizard welcome screen — full-page dark layout with animated text]
+
+## Configuration steps
+
+<Steps>
+  <Step title="Site Identity">
+    Set your site's name, tagline, and contact email.
+
+    | Field | Required? | What it does |
+    |---|---|---|
+    | **Site Name** | Required | Appears in the browser tab, email notifications, and the site header |
+    | **Tagline** | Optional | Short phrase shown below the site name on the homepage |
+    | **Contact Email** | Required | Receives sale notifications and buyer inquiries |
+
+    <Note>
+      Logo, favicon, footer text, social links, and phone number are not part of the wizard. Configure them after setup in **Settings → General**.
+    </Note>
+  </Step>
+
+  <Step title="AI Generation">
+    Configure the AI provider that generates domain descriptions, taglines, SEO metadata, use cases, and brand colors.
+
+    Toggle **Enable AI generation** on, then:
+
+    1. Select a provider — **OpenAI**, **Anthropic**, or **Google**
+    2. Paste your API key for that provider
+    3. Click **Load Models** to fetch the available models from your account
+    4. Select a model from the dropdown
+    5. Fill in the **Site Description** — describe your portfolio's focus and tone
+
+    The Site Description is the most important field here. The more specific it is, the better the AI output. Example: *"A curated collection of premium .com domains for tech startups and SaaS founders. Professional, concise tone."*
+
+    <Note>
+      You can skip AI setup and enable it later in **Settings → AI**. All AI settings — provider, key, model, prompts — are editable at any time.
+    </Note>
+
+    <Tip>
+      After the wizard, you can fine-tune every AI prompt template in **Settings → Prompts**. The wizard does not expose this — it just sets up the connection.
+    </Tip>
+  </Step>
+
+  <Step title="Email Notifications">
+    Set up email alerts so you're notified when inquiries and offers arrive.
+
+    Toggle **Enable email notifications** on, then fill in:
+
+    | Field | Description |
+    |---|---|
+    | **Resend API Key** | Your API key from [resend.com](https://resend.com). Go to **API Keys** in the Resend dashboard → click **Create API Key** → copy the value. |
+    | **From Email** | The sender address for outgoing emails, e.g. `noreply@yourdomain.com`. Must be a domain you've verified in Resend. |
+    | **Admin Email** | Where notification emails are delivered — typically your personal email. |
+
+    <Note>
+      Telegram notifications, per-event toggles, and Brevo newsletter are not part of the wizard. Configure them after setup in **Settings → Notifications**.
+    </Note>
+  </Step>
+</Steps>
+
+## Onboarding screens
+
+After the three configuration steps, the wizard shows six informational screens. These are a quick tour of key features — no input required. You can skip all of them at once using the **Skip tour →** link at the top.
+
+| Screen | What it covers |
+|---|---|
+| **Welcome** | Confirms your marketplace is ready to configure |
+| **Import Domains** | Overview of the Import Wizard — supported file formats, RDAP auto-fetch |
+| **AI Generation** | What AI generates for each domain and where to trigger it |
+| **Storage** | Cloudflare R2 for images — what's possible with and without it |
+| **Customization** | Appearance settings and page template builder |
+| **Notifications** | Email and Telegram notification setup overview |
+
+## Launch
+
+The final step shows a summary of what you configured — site name, AI status, and email notification status — and a **Launch Site** button.
+
+[SCREENSHOT: The Launch step showing the setup summary and the animated Launch Site button]
+
+When you click **Launch Site**, the wizard:
+
+1. Seeds 21 domain categories
+2. Creates 23 AI prompt templates
+3. Creates five base CMS pages: About, Contact, FAQ, Privacy Policy, Terms of Service
+4. Populates page templates for Homepage, Domain page, Category page, and Blog
+5. Sets navigation and appearance defaults
+6. Marks setup as complete
+
+After launch, you're redirected to the admin dashboard. The wizard will not appear again.
+
+<Warning>
+  Do not close the browser during the launch step. The seeding process takes a few seconds — wait for the "Site is live!" confirmation before navigating away.
+</Warning>
+
+## After the wizard
+
+The wizard covers the minimum. Before you start adding domains, consider setting up:
+
+- **Storage** — connect Cloudflare R2 if you want to upload images (**Settings → Storage**)
+- **Telegram notifications** — takes 2 minutes with @BotFather (**Settings → Notifications**)
+- **Appearance** — choose your theme, colors, and font (**Settings → Appearance**)
+- **Navigation** — update the main menu links (**Settings → Navigation**)
+
+<AccordionGroup>
+  <Accordion title="The wizard keeps showing up — how do I dismiss it?">
+    The wizard shows only when `setup.completed` is `false` in the database. If you see it after already completing setup, open the admin dashboard directly at `/admin`. The wizard appears at `/admin/install` — navigating away from it does not reset progress.
+
+    If setup truly is incomplete (e.g. the launch step failed), complete it again. The seed operation is non-destructive — it skips any records that already exist.
+  </Accordion>
+  <Accordion title="What if I want to re-run the wizard in development?">
+    Run `npm run reset-wizard` from the project directory. This resets `setup.completed` to `false` and `wizardStep` to `0`, letting you go through the wizard again. This command is only available in Docker/local environments — do not run it on a live site.
+  </Accordion>
+</AccordionGroup>

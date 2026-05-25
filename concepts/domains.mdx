@@ -1,0 +1,115 @@
+---
+title: "Domains"
+description: "How domain records are structured in Domainer Engine — fields, status, and automation."
+---
+
+Each record in the **Domains** collection represents a single domain name available on your marketplace. The domain name field doubles as the URL segment — a domain named `sell.beer` is publicly accessible at `/domains/sell.beer`.
+
+## Domain form overview
+
+The domain edit form is divided into sections. The sidebar contains the status, AI generation controls, marketplace toggles, and RDAP status. The main form contains content and configuration fields organized into the sections below.
+
+### Identity
+
+| Field | Purpose |
+|---|---|
+| **Domain Name** | The domain itself (`holdbuy.com`). Used as the page URL. Unique. |
+| **Display Name** | Visual capitalization override (`HoldBuy.com`). If blank, the domain name is used as-is. |
+| **Emoji** | One emoji used in cards and featured blocks. AI-generated or set manually. |
+| **Tagline** | One-line pitch shown under the domain name. AI-generated. |
+
+### Pricing & Sale Terms
+
+<Info>
+  Direct checkout and payment processing are not yet implemented. Prices are displayed to buyers, but the purchase flow is handled manually — buyers contact you through the offer or inquiry form to complete the transaction. Payment integration may be added in a future release.
+</Info>
+
+| Field | Purpose |
+|---|---|
+| **Price (USD)** | Asking price. Leave blank to show "Make Offer" instead of a price. |
+| **Sale Model** | How buyers can acquire the domain. See [Sale Models](/concepts/sale-models). |
+| **Minimum Offer Price** | The floor for accepted offers. Buyers don't see this value. |
+
+### Page Content
+
+| Field | Purpose |
+|---|---|
+| **Description** | Full-length rich text description of the domain. Shown on the domain page. AI-generated. |
+| **Short Description** | 1–2 sentence summary used in cards and ticker tape. AI-generated. |
+| **Curator Insight** | Editorial quote from you about why this domain is valuable. AI-generated. |
+
+### Categories & Tags
+
+| Field | Purpose |
+|---|---|
+| **Primary Category** | Main category — determines which category page the domain appears on. |
+| **Additional Categories** | Up to 2 extra categories. The domain also appears on those category pages. |
+| **Tags** | Free-form labels used as filters on the inventory page. See [Tags](/concepts/tags). |
+| **Similar Domains** | Manual override for the "Similar Domains" module. If empty, similar domains are selected automatically by category. |
+
+### Visual Identity
+
+| Field | Purpose |
+|---|---|
+| **Logo Image** | Domain logo shown in cards and featured blocks. Can be AI-generated. |
+| **Background Image** | Hero background for the domain page. Can be AI-generated. |
+| **Brand Color** | Hex accent color for this domain. Shown in branding playground. AI-generated. |
+
+### Use Cases & Audience
+
+| Field | Purpose |
+|---|---|
+| **Perfect Match For** | One paragraph describing the ideal buyer persona. AI-generated. |
+| **Use Cases** | Numbered list of scenarios where the domain excels. AI-generated. |
+
+### Technical Data
+
+Populated automatically via RDAP when you save a new domain name. You can uncheck **RDAP Data Fetched** to trigger a re-fetch, or edit any field manually.
+
+| Field | Source |
+|---|---|
+| **Registrar** | RDAP auto-fill |
+| **Registration Date** | RDAP auto-fill |
+| **Expiry Date** | RDAP auto-fill — used for expiry alert emails |
+| **Name Servers** | RDAP auto-fill |
+| **Transfer Type** | Determined from registration date: `< 60 days` → auth-code-locked, else auth-code |
+| **Transfer Notes** | Manual field for special instructions |
+
+### Marketplaces
+
+Toggle checkboxes for **Afternic**, **Sedo**, **Atom**, and **SAW**. When checked, the corresponding marketplace link appears on the domain page under the main CTA. You can also add custom marketplace links with a label and URL.
+
+---
+
+## Status
+
+Every domain has one of four statuses:
+
+| Status | Meaning |
+|---|---|
+| **Available** | Listed for sale. The domain page is public and fully functional. |
+| **Pending** | A checkout session is in progress. The domain is reserved for up to 30 minutes. |
+| **Sold** | Sale completed. Shown as sold on the site (display mode controlled by SEO settings). |
+| **Transferred** | Domain has been transferred to the buyer. Typically set manually after completing the transfer. |
+
+<Warning>
+  Status is changed only by: Stripe payment webhooks (available → pending → sold), the expiry cron (pending → available when reservation expires), or manual admin action. Never change status directly from the domain page URL — always use the admin panel.
+</Warning>
+
+### Status flow
+
+```
+available ──► pending ──► sold ──► transferred
+                │
+                └──► available  (reservation expired)
+```
+
+---
+
+## AI generation
+
+Every content field has an individual regenerate button. The **Generate All** button in the sidebar runs all content fields in one pass. The **Generate SEO** button regenerates the domain's SEO title and description separately.
+
+AI generation never saves automatically — review the result and click **Save** to apply it.
+
+See [AI Generation](/configuration/ai-settings) for how to configure the AI provider.

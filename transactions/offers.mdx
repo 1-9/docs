@@ -1,0 +1,69 @@
+---
+title: "Offers"
+description: "Review, counter, accept, or reject price offers submitted by buyers."
+---
+
+Go to **Transactions → Offers** in the admin panel.
+
+Offers are submitted by visitors through the **Make an Offer** form on a domain page. Unlike inquiries, each offer includes a specific dollar amount. The offer flow supports countering, accepting, and rejecting — with automatic buyer notifications at each step.
+
+---
+
+## How offers arrive
+
+When a visitor submits an offer on a domain page, a new record is created in the Offers collection with status **Pending**. You receive a notification immediately — by email (via Resend) and/or Telegram, depending on your [Notification Settings](/configuration/notification-settings).
+
+The Make an Offer form is shown on domain pages whose sale model is **Make an Offer** or **Buy Now + Make an Offer**. See [Sale Models](/concepts/sale-models).
+
+---
+
+## Offer fields
+
+| Field | Description |
+|---|---|
+| **Domain** | Which domain the offer is for. |
+| **Buyer Email** | The buyer's email. Required. |
+| **Buyer Name** | Optional name. |
+| **Offer Amount** | The buyer's proposed price in USD. |
+| **Status** | Current state of the offer (see below). |
+| **Counter Amount** | Your counter-proposal in USD. Set this before changing status to Countered. |
+| **Message** | Optional message from the buyer. |
+| **Admin Notes** | Your private notes — not sent to the buyer. |
+| **Expires At** | Optional expiry date for the offer or counter. |
+| **Order** | Linked order record once the offer is accepted and proceeds to payment. |
+
+---
+
+## Status flow and notifications
+
+Changing the status triggers automatic buyer notifications:
+
+| Status | What happens |
+|---|---|
+| **Pending** | Initial state on submission. No notification. |
+| **Countered** | Sends the buyer an email with your **Counter Amount**. Set the Counter Amount field before saving. |
+| **Accepted** | Sends the buyer an email confirming the offer is accepted. |
+| **Rejected** | Sends the buyer an email letting them know the offer was declined. |
+| **Expired** | Mark manually when an offer or counter has passed its deadline. No notification sent. |
+
+Notifications are sent via your configured email channel (Resend). Make sure your Resend credentials and the **Offer accepted/rejected/countered** toggles are enabled in [Notification Settings](/configuration/notification-settings).
+
+---
+
+## Handling an offer
+
+**To counter:** Enter a price in **Counter Amount**, change the status to **Countered**, and save. The buyer receives an email with your counter.
+
+**To accept:** Change the status to **Accepted** and save. The buyer receives a confirmation email. Then create an Order record manually to track the sale through to completion.
+
+**To reject:** Change the status to **Rejected** and save. The buyer receives a notification.
+
+<Note>
+  Accepting an offer does not automatically create a payment link or change the domain's status. Payment processing is not yet implemented. After accepting, follow up with the buyer directly to arrange payment and transfer. Then update the domain's status to **Sold** and create an Order record manually to keep your records complete.
+</Note>
+
+---
+
+## Admin Notes
+
+The **Admin Notes** field is private — it is never sent to the buyer. Use it to record context: where the negotiation stands, internal pricing decisions, or reminders for follow-up.

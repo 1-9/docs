@@ -1,0 +1,89 @@
+---
+title: "Requirements"
+description: "Everything you need before deploying Domainer Engine — accounts, services, and credentials."
+---
+
+Before you deploy, collect the accounts and credentials listed below. Required items are the minimum to get the site live. Optional services unlock specific features and can be configured after initial setup.
+
+<Info>
+  **GitHub repository invite required.** Domainer Engine is distributed through a private GitHub repository. To deploy — whether on Vercel or Docker — you need access to it. After purchase, I send you an invite to your GitHub account. If you haven't received it or it has expired, contact me and I'll send a new one.
+</Info>
+
+## Services overview
+
+| Service | Purpose | Required? |
+|---|---|---|
+| **Vercel** | Hosting — recommended deployment platform | Required (or Docker) |
+| **Server with Docker** | Hosting — self-managed alternative | Required (or Vercel) |
+| **Domain name** | Your marketplace URL (e.g. `domains.example.com`) | Required |
+| **Neon** | PostgreSQL database, used with Vercel | Auto-created via integration |
+| **Cloudflare R2** | Image storage — domain logos, backgrounds, site logo | Optional |
+| **Resend** | Transactional email notifications | Optional |
+| **Telegram bot** | Instant deal alerts via Telegram | Optional |
+| **OpenAI / Anthropic / Google** | AI content generation | Optional |
+| **Brevo** | Newsletter sign-up form + buyer price-drop alerts | Optional |
+
+## Required services
+
+### Vercel or Docker
+
+You need one hosting environment:
+
+- **Vercel** — sign up at [vercel.com](https://vercel.com). The free Hobby plan is sufficient for most portfolios.
+- **Docker** — install Docker Engine and Docker Compose on your server. See [docs.docker.com/get-docker](https://docs.docker.com/get-docker/) for installation instructions.
+
+### Domain name
+
+Your marketplace needs a domain name pointing to your deployment. You likely already own one — point it to Vercel or your server after deploying.
+
+## Optional services
+
+### Cloudflare R2 — image storage
+
+R2 is the only officially supported image storage provider. Without it, the site works fully but you cannot upload images (domain logos, background images, blog post images, or your site logo).
+
+- Sign up at [cloudflare.com](https://cloudflare.com)
+- R2 has a generous free tier with no egress fees — check current limits at [developers.cloudflare.com/r2/pricing](https://developers.cloudflare.com/r2/pricing)
+- You'll need to create a bucket and generate API credentials — covered in [Storage Settings](/configuration/storage-settings)
+
+### Resend — email notifications
+
+Resend sends transactional emails when inquiries, offers, and other events occur.
+
+- Sign up at [resend.com](https://resend.com)
+- A free tier is available — check current limits at [resend.com/pricing](https://resend.com/pricing)
+- You'll need to verify your sending domain in the Resend dashboard before emails will deliver reliably
+
+### Telegram bot — instant alerts
+
+Get push notifications directly in Telegram when a deal arrives. Setup takes about 2 minutes.
+
+- Open Telegram and start a conversation with [@BotFather](https://t.me/BotFather)
+- Create a new bot — BotFather gives you a bot token
+- You do not need a Telegram business account
+
+### AI provider — content generation
+
+AI writes domain descriptions, taglines, use cases, SEO metadata, and brand colors. Three providers are supported:
+
+- **OpenAI** — [platform.openai.com/api-keys](https://platform.openai.com/api-keys)
+- **Anthropic** — [console.anthropic.com/settings/keys](https://console.anthropic.com/settings/keys)
+- **Google AI** — [aistudio.google.com/apikey](https://aistudio.google.com/apikey)
+
+All three offer free trial credits or a free tier. You only need one.
+
+### Brevo — newsletter and price tracking
+
+Brevo powers two features: the newsletter sign-up form in the site footer, and buyer price-drop alert emails.
+
+- Sign up at [brevo.com](https://brevo.com)
+- A free tier is available — check current limits at [brevo.com/pricing](https://brevo.com/pricing)
+- You'll need an API key and a contact list ID — covered in [Notification Settings](/configuration/notification-settings)
+
+<Warning>
+  Pricing, free tier limits, and terms for third-party services change over time. The information above was accurate at the time of writing — verify current conditions directly on each provider's website before committing to a plan.
+</Warning>
+
+<Note>
+  You do not need to set up optional services before deploying. The Setup Wizard walks you through AI and email notifications on first launch — both can be skipped and configured later from the admin panel.
+</Note>

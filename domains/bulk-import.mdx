@@ -1,0 +1,123 @@
+---
+title: "Bulk Import"
+description: "Import dozens or hundreds of domains at once from Afternic, Sedo, Atom, or a plain text list."
+---
+
+The import wizard lets you add many domains in one pass, with optional AI generation for each one. Open it from **Domains → Domains → Import** in the admin panel.
+
+The wizard has five steps.
+
+---
+
+## Step 1 — Source
+
+Choose how to provide the domain list: **Enter Manually** or **Upload File**.
+
+### Manual entry
+
+Type or paste domains directly, one per line:
+
+```
+sell.beer,2999
+nova.ai,5000
+thirddomain.net
+```
+
+Format: `domain,price` — price is optional. If you omit the price, the domain is imported without one.
+
+### File upload
+
+Drop or browse for a file. Supported formats:
+
+| Format | File type | Auto-detected by |
+|---|---|---|
+| **Afternic** | XLSX | Headers: `Buy Now Price`, `Floor Price` |
+| **Sedo** | XLSX | Headers: `Domain Name`, `Price Option` |
+| **Atom** | CSV | Headers: `Domain Name`, `Listing Type` |
+| **Generic CSV** | CSV | Fallback for any other CSV |
+| **TXT** | TXT | One domain per line, optional `domain,price` |
+
+The format is detected automatically when you upload the file. The detected format and domain count are shown before you continue.
+
+Template files for CSV and TXT are available to download from the Upload tab if you want to build a list from scratch.
+
+---
+
+## Step 2 — Review & Configure
+
+Before importing, configure global options and review each domain row.
+
+### Global settings
+
+| Setting | Options | Default |
+|---|---|---|
+| **Duplicate handling** | Skip · Update existing · Create duplicate | Skip |
+| **AI generation** | On / Off | On (if AI is enabled) |
+| **AI fields to generate** | Checkbox list per field | All fields selected |
+
+When AI generation is on, every imported domain gets content generated automatically during the import stream. You can choose which fields to generate — deselect any you want to fill in manually later.
+
+AI fields available for generation: Emoji, Tagline, Short Description, Description, Curator Insight, Perfect Match, Category, Tags, Use Cases, Brand Color, SEO Meta.
+
+### Per-row overrides
+
+Expand any domain row to:
+
+- Change its **import action** (create / update / skip) individually — useful when a domain is flagged as a duplicate and you want to handle it differently from the global setting
+- Override the **AI fields** for that specific domain — generate fewer or more fields than the global setting
+
+Domains flagged as duplicates are highlighted. The global duplicate action is pre-applied but can be overridden per row.
+
+---
+
+## Step 3 — Import
+
+The import runs as a live stream. Each domain is processed in order:
+
+1. Record created or updated in the database
+2. If AI generation is on — content generated and saved
+3. Status logged in real time
+
+A progress bar and live log show the current domain and result. You can watch it complete or leave the page — the import continues in the background.
+
+When the stream finishes, a summary shows how many domains were created, updated, skipped, and how many AI fields were generated.
+
+---
+
+## Step 3b — Diff Review
+
+After the import, the wizard checks for domains currently in your database that were **not** in the import list. This catches domains you may have removed from your marketplace export without deleting them in the admin.
+
+For each missing domain you can choose:
+
+| Action | What happens |
+|---|---|
+| **Skip** | Leave the domain unchanged |
+| **Mark as Sold** | Set status to `sold` |
+| **Delete** | Permanently remove the record |
+
+If there are no missing domains, this step is skipped automatically.
+
+---
+
+## Step 4 — RDAP Enrichment
+
+The final step fetches registration data for all imported domains via RDAP:
+
+- Registrar
+- Registration date
+- Expiry date
+- Name servers
+- Transfer type
+
+RDAP enrichment runs in batches of 5 domains at a time and logs results as it goes. Domains whose TLD is not covered by RDAP (some country-code TLDs) are skipped with a note.
+
+This step is optional — click **Skip** if you don't need registration data or want to fill it in manually.
+
+---
+
+## After importing
+
+All imported domains are immediately live with status **Available**. Go to **Domains → Domains** to review them, update prices, assign categories, and make any adjustments.
+
+If you used AI generation during import, review the AI-written content on each domain before sharing your site — spot-check descriptions, use cases, and categories to make sure they match your expectations.

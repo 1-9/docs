@@ -1,0 +1,64 @@
+---
+title: "Adding Domains"
+description: "How to add a single domain, trigger AI generation, and publish it to your marketplace."
+---
+
+Go to **Domains → Domains → Add Domain** in the admin panel.
+
+## Required fields
+
+Only **Domain Name** is required. Everything else is optional — you can publish a domain with just a name and fill in content later.
+
+Enter the domain exactly as it should appear in the URL: `sell.beer`, `holdbuy.com`, `nova.ai`. Lowercase. No `www`.
+
+## RDAP auto-fill
+
+When you save a new domain name for the first time, the platform fetches registration data automatically via RDAP:
+
+- Registrar
+- Registration date
+- Expiry date
+- Name servers
+- Transfer type (derived from registration age — domains registered less than 60 days ago are flagged as potentially locked)
+
+This runs silently in the background and doesn't block saving. Check the **RDAP status indicator** in the sidebar to see if the fetch succeeded. If a domain's TLD isn't covered by RDAP (some ccTLDs), the fields stay empty — fill them in manually.
+
+To re-fetch, uncheck **RDAP Data Fetched** in the Technical Data section and save.
+
+## Generating content with AI
+
+Once the domain is saved, the AI generation buttons appear in the sidebar:
+
+- **Generate All** — runs all content fields in one pass: emoji, tagline, short description, description, curator insight, categories, tags, use cases, perfect match, and brand color
+- **Generate SEO** — generates the SEO title and description separately
+- Individual **↺** buttons next to each field — regenerate just that field
+
+AI generation never saves automatically. After generation, review the result in each field and click **Save** to apply.
+
+<Note>
+  AI generation requires a provider and API key configured in **Settings → AI**. If the AI is disabled or unconfigured, the generate buttons are hidden.
+</Note>
+
+## Setting the sale model
+
+Before publishing, set the **Sale Model** in the Pricing & Sale Terms section. The default is **Make an Offer**. See [Sale Models](/concepts/sale-models) for how each option affects what buyers see.
+
+If you set a price, also consider setting a **Minimum Offer Price** — the floor below which offers won't be submitted. Buyers never see this value.
+
+## Publishing
+
+The domain page goes live as soon as the record is saved with **Status: Available**. There is no separate publish toggle — available domains are always public.
+
+To take a domain off the market temporarily, change the status to any value other than **Available**. The page still exists but shows the sold/pending state depending on your [SEO Settings](/configuration/seo-settings).
+
+## Organizing your catalog
+
+For the domain to appear on a category page, assign a **Primary Category**. Without a category, the domain still appears in the main inventory and on the homepage grid, but not on any `/categories/{slug}` page.
+
+Add **Tags** to make the domain discoverable through the inventory filter bar. Tags are free-form — use whatever labels make sense for your portfolio. See [Tags](/concepts/tags).
+
+Toggle marketplace checkboxes (**Afternic**, **Sedo**, **Atom**, **SAW**) in the sidebar to show the corresponding marketplace links on the domain page. Add custom marketplace links if the domain is listed elsewhere.
+
+## Marking a domain as featured
+
+Check **Is Featured** in the sidebar to include the domain in Featured-mode blocks on the homepage and other pages. Use this for your highest-priority listings.

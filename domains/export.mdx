@@ -1,0 +1,39 @@
+---
+title: "Exporting Domains"
+description: "Export your domain inventory to Afternic, Sedo, Atom, or a full CSV for backup and analysis."
+---
+
+The export button is in the **Domains** list view, above the domain table. Click **Export** and choose a format from the dropdown.
+
+## Export formats
+
+| Format | File | What's included |
+|---|---|---|
+| **Afternic** | XLSX | Domain, Buy Now Price, Min Offer, Hidden flag |
+| **Sedo** | XLSX | Domain, Price, Min Offer, Category, Keywords |
+| **Atom** | CSV | Domain Name, Selling Price, Sale Type, Expiration Date |
+| **Full CSV** | CSV | All exportable fields — name, price, description, categories, tags, registrar, expiry date, marketplace flags |
+
+## Exporting a selection
+
+To export only specific domains, check their checkboxes in the list view before clicking Export. The export respects your selection — only the checked domains are included.
+
+If no domains are selected, the export includes all domains in the current filtered view. Apply filters (by status, category, or search) before exporting to narrow the output.
+
+## Platform exports
+
+**Afternic and Sedo** exports are ready to upload directly to those platforms as bulk price update files. The format matches what each platform expects for their bulk import tool.
+
+**Atom** export is compatible with the Atom marketplace bulk listing format.
+
+**Full CSV** is for your own use — portfolio backup, analysis in a spreadsheet, or migrating data to another tool. It includes fields that platform exports omit (descriptions, short descriptions, curator insights, tags, registrar, expiry date).
+
+<Note>
+  The Full CSV export strips rich text formatting from description fields — only plain text is exported. This is intentional: spreadsheet tools can't render rich text, and the plain text content is preserved correctly.
+</Note>
+
+## Keeping marketplace listings in sync
+
+The platform doesn't sync with Afternic, Sedo, or Atom automatically. To update your listings on those platforms after price changes or adding new domains, export the relevant format and re-upload it on each platform.
+
+Use the **Afternic**, **Sedo**, and **Atom** checkboxes on each domain record to control which marketplace links appear on the domain's public page — these are independent of whether the domain is actually listed on those platforms.

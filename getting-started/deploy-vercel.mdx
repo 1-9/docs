@@ -1,0 +1,124 @@
+---
+title: "Deploy on Vercel"
+description: "Step-by-step guide to deploying Domainer Engine on Vercel with a free Neon PostgreSQL database."
+---
+
+[VIDEO: Deploy on Vercel — full walkthrough]
+
+Vercel is the recommended deployment path for most users. You get a free PostgreSQL database via the Neon integration, automatic HTTPS, and zero server management.
+
+<Info>
+  Before you start, make sure you have received a GitHub repository invite. Without it, you won't be able to fork the repository. If you haven't received an invite or it has expired, contact me to get a new one.
+</Info>
+
+<Steps>
+  <Step title="Fork the repository">
+    Open the repository you were invited to on GitHub and click **Fork** → **Create fork**.
+
+    <Warning>
+      Set the fork visibility to **Private**. A public repository exposes the platform source code and violates the license agreement. If GitHub pre-selects "Public", change it to "Private" before clicking Create fork.
+    </Warning>
+  </Step>
+
+  <Step title="Add your own commit">
+    Vercel's free Hobby plan requires the deploying project to have at least one commit authored by the account owner. Since the existing commits belong to the platform maintainer, you need to add your own.
+
+    No terminal needed:
+
+    1. Open your fork on GitHub
+    2. Click on `README.md` in the file list
+    3. Click the pencil icon ✏️ (Edit this file)
+    4. Add a space or any character anywhere
+    5. Click **Commit changes** → **Commit changes** again to confirm
+
+    This is a one-time step. It has no effect on the platform itself.
+  </Step>
+
+  <Step title="Import the repository to Vercel">
+    1. Go to [vercel.com](https://vercel.com) and sign in
+    2. Click **Add New → Project**
+    3. Find your fork in the repository list → click **Import**
+
+    Vercel detects Next.js automatically — leave the framework preset as-is.
+  </Step>
+
+  <Step title="Fill in environment variables">
+    On the project configuration screen, scroll down to **Environment Variables** and add the following before clicking Deploy:
+
+    | Variable | Description | Where to get it |
+    |---|---|---|
+    | `PAYLOAD_SECRET` | Secret key for encrypting sessions | Generate at [generate-secret.vercel.app/32](https://generate-secret.vercel.app/32) |
+    | `NEXT_PUBLIC_URL` | Your site's full URL | `https://example.com` — use your actual domain |
+    | `CRON_SECRET` | Protects scheduled job endpoints | Any random string — [generate-secret.vercel.app/32](https://generate-secret.vercel.app/32) |
+    | `ANALYTICS_SALT` | Salt for anonymous visitor tracking | Any random string |
+
+    <Note>
+      Do not add `POSTGRES_URL` — it will be injected automatically by the Neon integration in the next step. If you add it manually, it will conflict.
+    </Note>
+
+    After filling in the variables, click **Deploy**. The first deploy will fail — this is expected, because the database hasn't been connected yet. Continue to the next step.
+
+    <Tip>
+      Missed a variable? Go to your project → **Settings** → **Environment Variables** to add or edit them at any time. After saving, redeploy for the changes to take effect.
+    </Tip>
+  </Step>
+
+  <Step title="Add the Neon database">
+    While the deploy is running (or after it fails), add the database:
+
+    1. In your Vercel project, go to the **Storage** tab
+    2. Click **Connect Store** → select **Neon** → **Continue**
+    3. Choose a region closest to your users → **Create**
+
+    Neon automatically injects the database connection variables into your project. **Do not redeploy yet** — add your domain first, then deploy once for both changes.
+  </Step>
+
+  <Step title="Add your domain">
+    1. In your project, go to **Settings** → **Domains**
+    2. Enter your domain name → click **Add**
+    3. Update your DNS records at your domain registrar with the values Vercel shows
+    4. Wait for the **Valid Configuration** ✓ status
+
+    If you used a placeholder in `NEXT_PUBLIC_URL` earlier, update it now: **Settings → Environment Variables** → set it to your real domain (e.g. `https://example.com`).
+
+    Now trigger a redeploy: **Deployments** tab → find the latest deployment → click **⋯** → **Redeploy**. This single redeploy picks up the Neon database, the correct URL, and your domain all at once.
+  </Step>
+
+  <Step title="Open the Setup Wizard">
+    Visit your domain — you'll be redirected to the Setup Wizard at `/admin/install`. Complete the wizard to seed your database, configure AI, and set up notifications.
+
+    See [Setup Wizard](/getting-started/basic-setup) for a full step-by-step walkthrough.
+  </Step>
+</Steps>
+
+## Scheduled jobs
+
+Three scheduled jobs are pre-configured in `vercel.json` and run automatically once `CRON_SECRET` is set — no additional configuration needed:
+
+| Job | Schedule | What it does |
+|---|---|---|
+| `/api/cron/expiry-check` | Daily at 08:00 UTC | Sends expiry reminder emails |
+| `/api/cron/daily-digest` | Daily at 09:00 UTC | Sends the Telegram daily summary |
+| `/api/cron/price-check` | Daily at 10:00 UTC | Sends price-drop alerts to subscribers |
+
+## Updating
+
+When a new version is released, updating on Vercel takes one click:
+
+1. Open your fork on GitHub
+2. Click **Sync fork** → **Update branch**
+3. Vercel detects the new commit and deploys automatically
+
+See [Updating](/getting-started/update) for details on what changes between versions.
+
+<AccordionGroup>
+  <Accordion title="Why does the first deploy fail?">
+    The platform requires a PostgreSQL database to start. On the first deploy, the database hasn't been connected yet, so the build completes but the app can't initialize. Once Neon is added and you redeploy, everything starts correctly. This is a one-time issue.
+  </Accordion>
+  <Accordion title="Why does Vercel need my own commit?">
+    Vercel's free Hobby plan restricts deployments of private repositories to projects where the connected account has authored at least one commit. Since all existing commits belong to the platform maintainer, adding a trivial commit to your fork satisfies this requirement.
+  </Accordion>
+  <Accordion title="PLATFORM_URL — do I need to set it?">
+    On Vercel, `NEXT_PUBLIC_URL` is baked into the JavaScript bundle at build time, so `PLATFORM_URL` is not required — the platform falls back to `NEXT_PUBLIC_URL` automatically. If you ever set up a custom proxy or reverse domain, you can add `PLATFORM_URL` separately to override the server-side URL without triggering a rebuild.
+  </Accordion>
+</AccordionGroup>

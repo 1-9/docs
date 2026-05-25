@@ -1,12 +1,12 @@
 {
   "$schema": "https://mintlify.com/docs.json",
-  "theme": "almond",
-  "name": "Product Guide",
-  "description": "Step-by-step guides for every product—platform setup, analytics, and integrations in one place.",
+  "theme": "venus",
+  "name": "Domainer Engine",
+  "description": "Documentation for Domainer Engine — a ready-to-deploy domain portfolio marketplace built on Next.js and Payload CMS.",
   "colors": {
-    "primary": "#166E3F",
-    "light": "#26BD6C",
-    "dark": "#166E3F"
+    "primary": "#1A1A2E",
+    "light": "#6366F1",
+    "dark": "#1A1A2E"
   },
   "favicon": "/favicon.ico",
   "icons": {
@@ -17,6 +17,21 @@
   },
   "contextual": {
     "options": ["copy", "view", "assistant", "mcp", "add-mcp"]
+  },
+  "logo": {
+    "light": "/logo/light.svg",
+    "dark": "/logo/dark.svg"
+  },
+  "navbar": {
+    "links": [],
+    "primary": {
+      "type": "button",
+      "label": "CodeCanyon",
+      "href": "https://codecanyon.net"
+    }
+  },
+  "footer": {
+    "socials": {}
   },
   "navigation": {
     "global": {
@@ -29,69 +44,83 @@
         {
           "anchor": "Changelog",
           "icon": "scroll-text",
-          "href": "https://www.mintlify.com/docs/changelog"
+          "href": "/changelog"
         },
         {
-          "anchor": "Help",
+          "anchor": "Support",
           "icon": "life-buoy",
-          "href": "https://www.mintlify.com/docs/contact-support"
+          "href": "/support"
         }
       ]
     },
-    "directory": "card",
     "groups": [
       {
-        "group": "Platform",
-        "icon": "layers",
-        "expanded": true,
+        "group": "Getting Started",
+        "icon": "rocket",
         "pages": [
-          "platform/quickstart",
-          "platform/key-concepts",
-          "platform/configuration/settings",
-          "platform/configuration/user-management",
-          "platform/administration/roles-permissions"
+          "getting-started/introduction",
+          "getting-started/requirements",
+          "getting-started/deploy-vercel",
+          "getting-started/deploy-docker",
+          "getting-started/deploy-zip",
+          "getting-started/basic-setup",
+          "getting-started/update"
         ]
       },
       {
-        "group": "Analytics",
-        "icon": "chart-bar",
-        "expanded": true,
+        "group": "Concepts",
+        "icon": "book-open",
         "pages": [
-          "analytics/quickstart",
-          "analytics/connect-data",
-          "analytics/dashboards/create-dashboard",
-          "analytics/reports/scheduled-reports"
+          "concepts/domains",
+          "concepts/categories",
+          "concepts/sale-models",
+          "concepts/tags",
+          "concepts/admin-panel"
         ]
       },
       {
-        "group": "Integrations",
-        "icon": "plug",
-        "expanded": true,
+        "group": "Configuration",
+        "icon": "settings",
         "pages": [
-          "integrations/quickstart",
-          "integrations/authentication",
-          "integrations/connectors/crm",
-          "integrations/webhooks/configure"
+          "configuration/general-settings",
+          "configuration/appearance-settings",
+          "configuration/ai-settings",
+          "configuration/ai-prompts",
+          "configuration/notification-settings",
+          "configuration/storage-settings",
+          "configuration/seo-settings",
+          "configuration/analytics-settings"
+        ]
+      },
+      {
+        "group": "Domains",
+        "icon": "globe",
+        "pages": [
+          "domains/adding-domains",
+          "domains/bulk-import",
+          "domains/export"
+        ]
+      },
+      {
+        "group": "Content",
+        "icon": "layout-panel-top",
+        "pages": [
+          "content/pages",
+          "content/page-builder",
+          "content/templates",
+          "content/blog",
+          "content/navigation"
+        ]
+      },
+      {
+        "group": "Transactions",
+        "icon": "handshake",
+        "pages": [
+          "transactions/inquiries",
+          "transactions/offers",
+          "transactions/orders"
         ]
       }
     ]
-  },
-  "logo": {
-    "light": "/logo/light.svg",
-    "dark": "/logo/dark.svg"
-  },
-  "navbar": {
-    "links": [],
-    "primary": {
-      "type": "button",
-      "label": "Dashboard",
-      "href": "https://dashboard.mintlify.com"
-    }
-  },
-  "footer": {
-    "socials": {
-      "x": "https://x.com/yourcompany",
-      "linkedin": "https://linkedin.com/company/yourcompany"
-    }
   }
 }

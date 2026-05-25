@@ -1,0 +1,73 @@
+---
+title: "Navigation"
+description: "Configure the main menu, dropdown sub-items, header CTA button, and footer link columns."
+---
+
+Go to **Settings → Navigation** in the admin panel.
+
+Navigation has three sections: CTA Button, Main Menu, and Footer Columns. Changes take effect immediately after saving.
+
+---
+
+## CTA Button
+
+The CTA Button appears in the top-right corner of the header. Enable it and configure a link to add a prominent call-to-action — for example, pointing visitors directly to your domains inventory or a contact page.
+
+| Field | Description |
+|---|---|
+| **Enabled** | Show or hide the button. Off by default. |
+| **Label** | Button text. Required when enabled. |
+| **Link Type** | Reference or Custom URL (see below). |
+
+---
+
+## Main Menu
+
+Add items to the main navigation bar. Each item supports an optional sub-menu with child links.
+
+### Adding an item
+
+Click **Add Main Menu** to add a row. Each row has:
+
+| Field | Description |
+|---|---|
+| **Label** | Link text. Leave empty to use the referenced entity's title automatically. |
+| **Link Type** | **Reference** — link to a page, category, post, or domain from your content. **Custom URL** — type any URL. |
+| **Reference** | Visible when Link Type is Reference. Choose from Pages, Categories, Posts, or Domains. |
+| **URL** | Visible when Link Type is Custom URL. Any absolute or relative path. |
+| **Is External** | Marks the link as an external destination. |
+| **Open in New Tab** | Opens the link in a new browser tab. |
+
+### Dropdown sub-menu
+
+Each menu item can have child links that appear as a dropdown. Expand the **Sub-items** section inside any menu row and add links using the same fields as the parent.
+
+Sub-menus are one level deep — sub-items do not support further nesting.
+
+---
+
+## Footer Columns
+
+The footer is divided into columns, each with an optional heading and a list of links.
+
+Click **Add Footer Columns** to add a column. Each column has:
+
+| Field | Description |
+|---|---|
+| **Column Heading** | Optional heading shown above the links. Leave empty for a column with no heading. |
+| **Links** | List of links using the same Reference / Custom URL fields as the main menu. |
+
+The number of columns and how they wrap on smaller screens is handled by the layout automatically.
+
+---
+
+## Link types reference
+
+| Link Type | When to use |
+|---|---|
+| **Reference** | Linking to content that already exists in the admin — a CMS page, a category, a blog post, or a domain. The URL is generated automatically from the entity's slug. |
+| **Custom URL** | Linking to anything else: an external site, an anchor (`#section`), a full external URL. |
+
+<Note>
+  For Reference links, the label field is optional — leave it empty and the linked entity's title will be used as the link text. For Custom URL links, always enter a label.
+</Note>

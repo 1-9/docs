@@ -1,0 +1,57 @@
+---
+title: "Inquiries"
+description: "Manage contact messages and inquiries submitted by visitors through the inquiry form on domain pages."
+---
+
+Go to **Transactions → Inquiries** in the admin panel.
+
+Inquiries are messages submitted by visitors through the **Inquiry Form** on a domain page. They are used for general questions, price requests, and interest expressions — as opposed to Offers, which include a specific price.
+
+---
+
+## How inquiries arrive
+
+When a visitor fills in and submits the inquiry form on a domain page, a new record is created in the Inquiries collection. You receive a notification immediately — by email (via Resend) and/or Telegram, depending on your [Notification Settings](/configuration/notification-settings).
+
+The inquiry form has a spam guard: if the hidden honeypot field is filled (by bots), the submission is silently rejected and no record is created.
+
+---
+
+## Inquiry fields
+
+| Field | Description |
+|---|---|
+| **Domain** | Which domain the inquiry is about. |
+| **Buyer Email** | The submitter's email. Required. |
+| **Buyer Name** | Optional name provided by the submitter. |
+| **Message** | The full inquiry message. |
+| **Status** | Tracks where the conversation stands (see below). |
+| **Counter Amount** | Optional dollar amount — useful when you respond with a price suggestion. |
+| **IP Address** | Recorded automatically. Read-only. |
+
+---
+
+## Status flow
+
+Update the status manually as you handle each inquiry:
+
+| Status | Meaning |
+|---|---|
+| **New** | Just received, not yet read. |
+| **Read** | You've read it but haven't responded yet. |
+| **Replied** | You've sent a reply. |
+| **Accepted** | You've agreed to proceed. |
+| **Rejected** | You've declined. |
+| **Countered** | You've responded with a counter-proposal. |
+
+There is no built-in reply mechanism — replies are sent directly from your email client to the buyer's address. Update the status in the admin to keep track of where each inquiry stands.
+
+---
+
+## Replying to an inquiry
+
+Open the inquiry record and copy the **Buyer Email**. Compose your reply in your normal email client. Once sent, set the status to **Replied** (or **Countered** if you included a price offer) and save.
+
+<Tip>
+  If a visitor is asking about price for a domain with no price set, their inquiry will show **Subject: Request Price**. This is a good signal to follow up with a quote.
+</Tip>

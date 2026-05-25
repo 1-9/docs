@@ -1,0 +1,60 @@
+---
+title: "Categories"
+description: "How domain categories and blog post categories work in Domainer Engine."
+---
+
+The platform has two separate category systems that serve different purposes. They are independent and not interchangeable.
+
+## Domain categories
+
+Domain categories organize your inventory. Each category gets its own public page at `/categories/{slug}` that lists all domains in that category.
+
+The Setup Wizard seeds 21 starter categories (Technology, Finance, Health, E-commerce, and so on). You can rename them, add new ones, or delete unused ones.
+
+### How domains are categorized
+
+Each domain has one **Primary Category** — this determines which category page the domain appears on. You can also assign up to two **Additional Categories** so the domain appears on those pages as well.
+
+Category assignment can be done manually or via AI. The AI categorization prompt has access to the full list of your categories, so it picks from what you actually have.
+
+### Category fields
+
+| Field | Purpose |
+|---|---|
+| **Name** | Category name. The slug is generated automatically from the name. |
+| **Description** | Rich text description shown at the top of the category page. AI-generated. |
+| **Curator Insight** | Short editorial quote about this category. AI-generated. |
+| **SEO Text** | HTML content shown below the domain grid on the category page. AI-generated. |
+| **Theme Color** | Hex color used to accent the category — header gradient, badges, and highlights. AI-generated. |
+
+### AI content freshness
+
+When you add, remove, or change the status of domains in a category, the platform automatically marks that category's AI content as outdated. A banner appears in the admin form reminding you to regenerate the description and curator insight to reflect the current inventory.
+
+The **Regenerate All** and individual field regen buttons are available at the top of every category form.
+
+---
+
+## Post categories
+
+Post categories are a separate, simpler taxonomy used only for blog posts. They have no public page — they serve as filter labels on the blog index page at `/blog`.
+
+Post categories live at **Content → Post Categories** in the admin panel.
+
+| Field | Purpose |
+|---|---|
+| **Name** | Category name |
+| **Slug** | URL-safe identifier used in the blog filter |
+
+Post categories have no description, no theme color, and no AI generation. They are just organizational labels for your blog.
+
+---
+
+## Which to use for what
+
+| Use case | Use |
+|---|---|
+| Grouping domains by industry or type | Domain categories |
+| Organizing blog posts by topic | Post categories |
+| Driving traffic to a `/categories/{slug}` page | Domain categories |
+| Filtering the blog index | Post categories |

@@ -1,0 +1,138 @@
+---
+title: "Deploy from ZIP"
+description: "Deploy Domainer Engine from source files using Docker Compose — for advanced users who prefer full control over the build."
+---
+
+<Warning>
+  This is the most advanced deployment method. Updates require downloading a new version, replacing files, and rebuilding the image manually — which takes significantly more time and technical knowledge than the [Vercel](/getting-started/deploy-vercel) or [Docker image](/getting-started/deploy-docker) paths. Use this method only if you have a specific reason not to use the other two.
+</Warning>
+
+This method builds the Docker image locally from the source files you received with your purchase. You do not need a GitHub invite or a GitHub account.
+
+## Prerequisites
+
+- A server or VPS with Docker and Docker Compose installed — see [docs.docker.com/get-docker](https://docs.docker.com/get-docker/)
+- A domain name pointed at your server's IP address
+
+<Steps>
+  <Step title="Transfer the source files to your server">
+    Extract the ZIP file you received with your purchase. Transfer the extracted folder to your server via SFTP (FileZilla, Cyberduck) or any method you prefer.
+
+    Place the files in a directory like `/opt/domainer` or `/home/youruser/domainer`.
+
+    <Warning>
+      If you choose to store the source files in a GitHub repository, keep that repository **private**. A public repository exposes the platform source code and violates the license agreement.
+    </Warning>
+  </Step>
+
+  <Step title="Create your .env file">
+    From the project directory, copy the example environment file:
+
+    ```bash
+    cp .env.example .env
+    ```
+
+    Open `.env` and fill in the values:
+
+    ```env
+    PAYLOAD_SECRET=your-random-32-char-string
+    NEXT_PUBLIC_URL=https://example.com
+    PLATFORM_URL=https://example.com
+    CRON_SECRET=your-random-string
+    ANALYTICS_SALT=your-random-string
+    ```
+
+    | Variable | Description | Where to get it |
+    |---|---|---|
+    | `PAYLOAD_SECRET` | Secret key for encrypting sessions | Generate at [generate-secret.vercel.app/32](https://generate-secret.vercel.app/32) |
+    | `NEXT_PUBLIC_URL` | Your site's full URL | `https://example.com` — your actual domain |
+    | `PLATFORM_URL` | Same value as `NEXT_PUBLIC_URL` | Set to the same URL |
+    | `CRON_SECRET` | Protects scheduled job endpoints | Any random string |
+    | `ANALYTICS_SALT` | Salt for anonymous visitor tracking | Any random string |
+
+    <Note>
+      `DATABASE_URL` is pre-configured in `docker-compose.yml` and points to the PostgreSQL container. Do not change it unless you are using an external database.
+    </Note>
+  </Step>
+
+  <Step title="Start the containers">
+    ```bash
+    docker compose up -d
+    ```
+
+    On first start, Docker builds the Next.js application from source — this takes **3–5 minutes**. Subsequent starts reuse the cached build and are fast.
+
+    The startup sequence:
+    1. PostgreSQL 16 starts and waits until healthy
+    2. Database migrations run
+    3. Next.js builds (first time only)
+    4. The app starts on port 3000
+
+    Check that both containers are running:
+
+    ```bash
+    docker compose ps
+    ```
+
+    You should see `app` and `db` with status `Up`.
+  </Step>
+
+  <Step title="Set up a reverse proxy with HTTPS">
+    The app runs on port 3000. Set up Nginx as a reverse proxy with a Let's Encrypt certificate:
+
+    ```nginx
+    server {
+        listen 443 ssl;
+        server_name example.com;
+
+        location / {
+            proxy_pass http://127.0.0.1:3000;
+            proxy_set_header Host $host;
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_set_header X-Forwarded-Proto $scheme;
+        }
+    }
+    ```
+
+    See the [Certbot documentation](https://certbot.eff.org) for certificate setup instructions.
+  </Step>
+
+  <Step title="Set up scheduled jobs">
+    Add cron entries on your server for the background jobs (edit with `crontab -e`):
+
+    ```
+    0 8 * * * curl -s -H "x-cron-secret: YOUR_CRON_SECRET" https://example.com/api/cron/expiry-check
+    0 9 * * * curl -s -H "x-cron-secret: YOUR_CRON_SECRET" https://example.com/api/cron/daily-digest
+    0 10 * * * curl -s -H "x-cron-secret: YOUR_CRON_SECRET" https://example.com/api/cron/price-check
+    ```
+
+    These are optional — see the [Docker deployment guide](/getting-started/deploy-docker#scheduled-jobs-optional) for what each job does.
+  </Step>
+
+  <Step title="Open the Setup Wizard">
+    Visit your domain — you'll be redirected to the Setup Wizard at `/admin/install`. Complete the wizard to seed your database, configure AI, and set up notifications.
+
+    See [Setup Wizard](/getting-started/basic-setup) for a full walkthrough.
+  </Step>
+</Steps>
+
+## Updating
+
+Updates with this method require the most manual steps. See the [Updating](/getting-started/update) guide for the full ZIP update process.
+
+## Useful Docker commands
+
+```bash
+# View live logs
+docker compose logs -f app
+
+# Restart the app container
+docker compose restart app
+
+# Stop everything (keeps database data)
+docker compose down
+
+# Stop and delete all data — destructive
+docker compose down -v
+```

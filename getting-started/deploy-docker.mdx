@@ -1,0 +1,187 @@
+---
+title: "Deploy with Docker"
+description: "Deploy Domainer Engine on any server using a pre-built Docker image from GitHub Container Registry."
+---
+
+[VIDEO: Deploy with Docker — Hostinger walkthrough]
+
+This guide uses the pre-built Docker image published to GitHub Container Registry (GHCR). You don't build anything from source — Docker pulls the ready-to-run image directly. Updates are a single command or one click in your hosting panel.
+
+<Info>
+  Before you start, make sure you have received a GitHub repository invite. You need it to authenticate and pull the private Docker image. If you haven't received an invite or it has expired, contact me to get a new one.
+</Info>
+
+## Prerequisites
+
+- A server or VPS with Docker and Docker Compose installed — see [docs.docker.com/get-docker](https://docs.docker.com/get-docker/)
+- A domain name pointed at your server's IP address
+
+<Steps>
+  <Step title="Generate a GitHub Personal Access Token (PAT)">
+    Docker needs your GitHub credentials to pull the private image from GHCR.
+
+    1. Go to [github.com/settings/tokens](https://github.com/settings/tokens) (GitHub → **Settings** → **Developer settings** → **Personal access tokens** → **Tokens (classic)**)
+    2. Click **Generate new token (classic)**
+    3. Give it a name (e.g. `domainer-docker`)
+    4. Under **Select scopes**, check **`read:packages`** — this is the only permission needed
+    5. Click **Generate token** and copy the value immediately — GitHub shows it only once
+
+    <Warning>
+      Store the token somewhere safe. If you lose it, you'll need to generate a new one.
+    </Warning>
+  </Step>
+
+  <Step title="Log in to GitHub Container Registry">
+    On your server, authenticate Docker with GHCR using your GitHub username and the token you just generated:
+
+    ```bash
+    echo YOUR_PAT | docker login ghcr.io -u YOUR_GITHUB_USERNAME --password-stdin
+    ```
+
+    Replace `YOUR_PAT` with the token and `YOUR_GITHUB_USERNAME` with your GitHub username. You should see `Login Succeeded`.
+
+    You only need to do this once — Docker stores the credentials on the server.
+  </Step>
+
+  <Step title="Download the Compose file">
+    Download `docker-compose.hub.yml` from the GitHub repository you were invited to and place it on your server. This file tells Docker which image to pull and how to configure the services.
+
+    You can do this via SFTP, or copy the file contents directly from GitHub and create it manually on the server.
+  </Step>
+
+  <Step title="Create your .env file">
+    In the same directory as `docker-compose.hub.yml`, create a `.env` file with the following variables:
+
+    ```env
+    PAYLOAD_SECRET=your-random-32-char-string
+    NEXT_PUBLIC_URL=https://example.com
+    PLATFORM_URL=https://example.com
+    CRON_SECRET=your-random-string
+    ANALYTICS_SALT=your-random-string
+    ```
+
+    | Variable | Description | Where to get it |
+    |---|---|---|
+    | `PAYLOAD_SECRET` | Secret key for encrypting sessions | Generate at [generate-secret.vercel.app/32](https://generate-secret.vercel.app/32) |
+    | `NEXT_PUBLIC_URL` | Your site's full URL | `https://example.com` — your actual domain |
+    | `PLATFORM_URL` | Same value as `NEXT_PUBLIC_URL` | Set to the same URL |
+    | `CRON_SECRET` | Protects scheduled job endpoints | Any random string |
+    | `ANALYTICS_SALT` | Salt for anonymous visitor tracking | Any random string |
+
+    <Note>
+      `DATABASE_URL` is already configured inside `docker-compose.hub.yml` and points to the PostgreSQL container. Do not add it to `.env`.
+    </Note>
+  </Step>
+
+  <Step title="Start the containers">
+    ```bash
+    docker compose -f docker-compose.hub.yml up -d
+    ```
+
+    Docker will pull the platform image from GHCR, start a PostgreSQL 16 container, run database migrations, and start the app on port 3000. The first pull takes a minute depending on your server's connection speed — subsequent starts are instant.
+
+    Verify both containers are running:
+
+    ```bash
+    docker compose -f docker-compose.hub.yml ps
+    ```
+
+    You should see `app` and `db` with status `Up`.
+  </Step>
+
+  <Step title="Set up a reverse proxy with HTTPS">
+    The app runs on port 3000. You need a reverse proxy to serve it on port 443 with HTTPS. A minimal Nginx + Certbot setup:
+
+    ```nginx
+    server {
+        listen 443 ssl;
+        server_name example.com;
+
+        location / {
+            proxy_pass http://127.0.0.1:3000;
+            proxy_set_header Host $host;
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_set_header X-Forwarded-Proto $scheme;
+        }
+    }
+    ```
+
+    See the [Certbot documentation](https://certbot.eff.org) for how to issue a free Let's Encrypt certificate for your server and distribution.
+  </Step>
+
+  <Step title="Open the Setup Wizard">
+    Visit your domain — you'll be redirected to the Setup Wizard at `/admin/install`. Complete the wizard to seed your database, configure AI, and set up notifications.
+
+    See [Setup Wizard](/getting-started/basic-setup) for a full step-by-step walkthrough.
+  </Step>
+</Steps>
+
+## Scheduled jobs (optional)
+
+The platform works fully without scheduled jobs. However, three background tasks handle important notifications and will not run unless you set them up:
+
+| Endpoint | Recommended schedule | What it does |
+|---|---|---|
+| `GET /api/cron/expiry-check` | Daily at 08:00 | Domain expiry reminder emails |
+| `GET /api/cron/daily-digest` | Daily at 09:00 | Telegram daily summary |
+| `GET /api/cron/price-check` | Daily at 10:00 | Price-drop alerts for subscribers |
+
+Each request must include the `x-cron-secret` header matching your `CRON_SECRET` value.
+
+Example crontab entries (edit with `crontab -e`):
+
+```
+0 8 * * * curl -s -H "x-cron-secret: YOUR_CRON_SECRET" https://example.com/api/cron/expiry-check
+0 9 * * * curl -s -H "x-cron-secret: YOUR_CRON_SECRET" https://example.com/api/cron/daily-digest
+0 10 * * * curl -s -H "x-cron-secret: YOUR_CRON_SECRET" https://example.com/api/cron/price-check
+```
+
+## Updating
+
+Pull the latest image and restart:
+
+```bash
+docker compose -f docker-compose.hub.yml pull
+docker compose -f docker-compose.hub.yml up -d
+```
+
+Migrations run automatically on startup. No manual steps needed.
+
+See [Updating](/getting-started/update) for the full update guide.
+
+---
+
+## Example: Hostinger VPS with Docker Manager
+
+Hostinger's VPS plans include a visual Docker Manager that makes deployment and updates possible without any terminal commands.
+
+[SCREENSHOT: Hostinger Docker Manager — project list with Update button visible]
+
+<Steps>
+  <Step title="Add your GitHub credentials in Hostinger">
+    In the Hostinger control panel, open **Docker Manager** → **Credentials** → **+ Credential**.
+
+    - Registry: `GitHub Container Registry`
+    - Username: your GitHub username
+    - Token: your GitHub PAT (the token from Step 1)
+
+    Save. Hostinger will use these credentials to pull the private image.
+  </Step>
+
+  <Step title="Create a new Docker project">
+    Click **Docker Manager** → **Projects** → **Compose** → choose **Compose manually** → name your project → in **.yaml editor** paste the contents of `docker-compose.hub.yml` and in **Environment** add your `.env` values → click **Deploy**.
+
+    Hostinger pulls the image, starts the containers, and shows you the running status.
+
+    <Note>
+      You will also need to carry out some additional configuration, which will depend on your VPS settings. Please follow the general instructions above.
+    </Note>
+  </Step>
+
+  <Step title="Update with one click">
+    When a new version is available, open your project in Docker Manager → click **⋯** → **Update**.
+
+    Hostinger pulls the new image and restarts the container automatically. The whole process takes under a minute.
+  </Step>
+</Steps>
