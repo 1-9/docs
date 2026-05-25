@@ -23,12 +23,7 @@
     "dark": "/logo/dark.svg"
   },
   "navbar": {
-    "links": [],
-    "primary": {
-      "type": "button",
-      "label": "CodeCanyon",
-      "href": "https://codecanyon.net"
-    }
+    "links": []
   },
   "footer": {
     "socials": {}
