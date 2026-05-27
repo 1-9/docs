@@ -49,7 +49,8 @@
           "getting-started/deploy-docker",
           "getting-started/deploy-zip",
           "getting-started/basic-setup",
-          "getting-started/update"
+          "getting-started/update",
+          "getting-started/troubleshooting"
         ]
       },
       {
@@ -104,6 +105,13 @@
           "transactions/inquiries",
           "transactions/offers",
           "transactions/orders"
+        ]
+      },
+      {
+        "group": "Legal",
+        "icon": "scale",
+        "pages": [
+          "license"
         ]
       }
     ]

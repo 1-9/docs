@@ -1,0 +1,36 @@
+---
+title: "Troubleshooting"
+description: "Solutions to common issues — stale content, cache problems, and other things that occasionally need a manual fix."
+---
+
+## Content not updating after edits
+
+Domainer Engine serves public pages from a static cache for performance. In most cases the cache invalidates automatically when you save a record — but occasionally a page can appear stale after an edit.
+
+**Fix: reset the cache manually.**
+
+Open the admin panel, go to **Settings** in the sidebar, scroll to the bottom, and click **Reset Cache**. The button calls the API, clears the cache for every public page, and shows a confirmation toast when done.
+
+<Note>
+  Reset Cache requires you to be logged in as an admin. It has no effect on the admin panel itself — only the public-facing site.
+</Note>
+
+### What gets cleared
+
+A single click revalidates everything:
+
+- Every domain page (`/domains/[name]`)
+- Every category page (`/categories/[slug]`)
+- All published blog posts (`/blog/[slug]`)
+- All published CMS pages (`/[slug]`)
+- Homepage, sitemap, and all page templates
+- Site settings, navigation, appearance, SEO, notifications, and analytics settings
+
+### When to use it
+
+- A domain page is showing old content after you saved changes
+- The homepage doesn't reflect a newly published domain
+- Navigation or footer changes are not appearing on the public site
+- You updated a page template and the public site hasn't picked it up
+
+For routine edits, the cache invalidates automatically and you won't need this. Use Reset Cache when something visually looks wrong after a save.
