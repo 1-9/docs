@@ -15,7 +15,7 @@ If the platform or storefront where you purchased Domainer Engine supports updat
 </Warning>
 
 <Tabs>
-  <Tab title="Vercel">
+  <Tab title="Vercel (fork)">
     Updating on Vercel is one click:
 
     <Steps>
@@ -29,6 +29,30 @@ If the platform or storefront where you purchased Domainer Engine supports updat
         Vercel detects the new commit and starts a deployment automatically. No action needed on your part — watch the **Deployments** tab for the build to complete.
 
         Migrations run during the build step before the app goes live.
+      </Step>
+    </Steps>
+  </Tab>
+
+  <Tab title="Vercel (own repo)">
+    <Steps>
+      <Step title="Download the new version">
+        Download the updated source files from where you purchased the platform.
+      </Step>
+
+      <Step title="Replace the engine directory">
+        Extract the new ZIP. Copy the `engine/` directory from it, replacing the `engine/` directory in your local clone.
+
+        Do not replace anything outside `engine/` unless the release notes explicitly say to.
+      </Step>
+
+      <Step title="Commit and push">
+        ```bash
+        git add engine/
+        git commit -m "Update to v1.x.x"
+        git push
+        ```
+
+        Vercel detects the new commit and deploys automatically. Migrations run during the build step — no manual action needed on your part.
       </Step>
     </Steps>
   </Tab>

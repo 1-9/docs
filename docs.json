@@ -46,6 +46,7 @@
           "getting-started/introduction",
           "getting-started/requirements",
           "getting-started/deploy-vercel",
+          "getting-started/deploy-vercel-zip",
           "getting-started/deploy-docker",
           "getting-started/deploy-zip",
           "getting-started/basic-setup",

@@ -1,0 +1,154 @@
+---
+title: "Deploy on Vercel (from ZIP)"
+description: "Deploy Domainer Engine on Vercel using your own private GitHub repository — no GitHub organization invite required, just the ZIP file from your purchase."
+---
+
+This method lets you deploy on Vercel without needing access to the official releases repository. You create your own private GitHub repository, push the source files from your ZIP, and connect it to Vercel — the rest of the process is identical to the standard Vercel deployment.
+
+<Warning>
+  **You must create a private repository.** Pushing the platform source code to a public repository exposes proprietary code and is a violation of the license agreement. GitHub defaults to "Public" when creating a new repository — make sure to change it to **Private** before clicking Create.
+</Warning>
+
+## When to use this method
+
+The recommended deployment path is to request a **free GitHub organization invite** on the platform where you made your purchase. The invite gives you access to the official releases repository, makes updates one-click (Sync fork → done), and requires no local git setup. See [Deploy on Vercel](/getting-started/deploy-vercel).
+
+Use this method instead if:
+- You don't want to request an invite or prefer not to wait for it
+- You want full control over your own repository
+- You want to manage updates manually
+
+<Steps>
+  <Step title="Create a private GitHub repository">
+    1. Go to [github.com/new](https://github.com/new)
+    2. Enter a repository name — for example, `domainer`
+    3. Set visibility to **Private**
+
+    <Warning>
+      Do not change the visibility to Public at any point. A public repository containing the platform source code violates the license agreement.
+    </Warning>
+
+    4. Leave all other settings at their defaults — do **not** initialize with a README, `.gitignore`, or license
+    5. Click **Create repository**
+
+    GitHub shows you the repository URL — keep this tab open, you'll need the URL in the next step.
+  </Step>
+
+  <Step title="Push the source files">
+    Extract the ZIP file you received with your purchase. Open a terminal, navigate to the extracted folder, and run:
+
+    ```bash
+    git init
+    git remote add origin https://github.com/yourusername/your-repo-name.git
+    git add .
+    git commit -m "Initial deployment"
+    git branch -M main
+    git push -u origin main
+    ```
+
+    Replace `yourusername` and `your-repo-name` with your actual GitHub username and the repository name you just created.
+
+    The push may take a minute depending on your connection speed. Once complete, refresh the GitHub repository page — you should see all the platform files listed.
+
+    <Note>
+      Your first commit is already authored by your GitHub account, so Vercel's Hobby plan requirement (at least one commit by the account owner) is automatically satisfied. No extra steps needed.
+    </Note>
+  </Step>
+
+  <Step title="Import the repository to Vercel">
+    1. Go to [vercel.com](https://vercel.com) and sign in
+    2. Click **Add New → Project**
+    3. Find your repository in the list → click **Import**
+
+    Vercel detects Next.js automatically — leave the framework preset as-is.
+  </Step>
+
+  <Step title="Fill in environment variables">
+    On the project configuration screen, scroll down to **Environment Variables** and add the following before clicking Deploy:
+
+    | Variable | Description | Where to get it |
+    |---|---|---|
+    | `PAYLOAD_SECRET` | Secret key for encrypting sessions | Generate at [generate-secret.vercel.app/32](https://generate-secret.vercel.app/32) |
+    | `NEXT_PUBLIC_URL` | Your site's full URL | `https://example.com` — use your actual domain |
+    | `CRON_SECRET` | Protects scheduled job endpoints | Any random string — [generate-secret.vercel.app/32](https://generate-secret.vercel.app/32) |
+    | `ANALYTICS_SALT` | Salt for anonymous visitor tracking | Any random string |
+
+    <Note>
+      Do not add `POSTGRES_URL` — it will be injected automatically by the Neon integration in the next step. If you add it manually, it will conflict.
+    </Note>
+
+    After filling in the variables, click **Deploy**. The first deploy will fail — this is expected, because the database hasn't been connected yet. Continue to the next step.
+  </Step>
+
+  <Step title="Add the Neon database">
+    While the deploy is running (or after it fails), add the database:
+
+    1. In your Vercel project, go to the **Storage** tab
+    2. Click **Connect Store** → select **Neon** → **Continue**
+    3. Choose a region closest to your users → **Create**
+
+    Neon automatically injects the database connection variables into your project. **Do not redeploy yet** — add your domain first.
+  </Step>
+
+  <Step title="Add your domain">
+    1. In your project, go to **Settings** → **Domains**
+    2. Enter your domain name → click **Add**
+    3. Update your DNS records at your domain registrar with the values Vercel shows
+    4. Wait for the **Valid Configuration** ✓ status
+
+    If you used a placeholder in `NEXT_PUBLIC_URL` earlier, update it now: **Settings → Environment Variables** → set it to your real domain (e.g. `https://example.com`).
+
+    Now trigger a redeploy: **Deployments** tab → find the latest deployment → click **⋯** → **Redeploy**. This single redeploy picks up the Neon database, the correct URL, and your domain all at once.
+  </Step>
+
+  <Step title="Open the Setup Wizard">
+    Visit your domain — you'll be redirected to the Setup Wizard at `/admin/install`. Complete the wizard to seed your database, configure AI, and set up notifications.
+
+    See [Setup Wizard](/getting-started/basic-setup) for a full step-by-step walkthrough.
+  </Step>
+</Steps>
+
+## Scheduled jobs
+
+Three scheduled jobs are pre-configured in `vercel.json` and run automatically once `CRON_SECRET` is set — no additional configuration needed:
+
+| Job | Schedule | What it does |
+|---|---|---|
+| `/api/cron/expiry-check` | Daily at 08:00 UTC | Sends expiry reminder emails |
+| `/api/cron/daily-digest` | Daily at 09:00 UTC | Sends the Telegram daily summary |
+| `/api/cron/price-check` | Daily at 10:00 UTC | Sends price-drop alerts to subscribers |
+
+## Updating
+
+When a new version is released:
+
+1. Download the updated source files from where you purchased the platform
+2. Extract the new ZIP and copy the `engine/` directory from it, replacing the `engine/` directory in your local clone
+3. Commit and push:
+
+```bash
+git add engine/
+git commit -m "Update to v1.x.x"
+git push
+```
+
+Vercel detects the new commit and deploys automatically. Migrations run during the build step — no manual action needed.
+
+Do not replace anything outside `engine/` unless the release notes explicitly say to.
+
+See [Updating](/getting-started/update) for full details on what changes between versions.
+
+<AccordionGroup>
+  <Accordion title="Why does the first deploy fail?">
+    The platform requires a PostgreSQL database to start. On the first deploy, the database hasn't been connected yet, so the build completes but the app can't initialize. Once Neon is added and you redeploy, everything starts correctly. This is a one-time issue.
+  </Accordion>
+  <Accordion title="Can I make the repository public later?">
+    No. Publishing the platform source code in a public repository at any time — during or after deployment — violates the license agreement. Keep the repository private permanently.
+  </Accordion>
+  <Accordion title="PLATFORM_URL — do I need to set it?">
+    On Vercel, `NEXT_PUBLIC_URL` is baked into the JavaScript bundle at build time, so `PLATFORM_URL` is not required. If you ever set up a custom proxy or reverse domain, you can add `PLATFORM_URL` separately to override the server-side URL without triggering a rebuild.
+  </Accordion>
+  <Accordion title="What if I don't have git installed?">
+    Install Git from [git-scm.com](https://git-scm.com). Alternatively, use [GitHub Desktop](https://desktop.github.com) — a GUI application that lets you push files without using the terminal.
+  </Accordion>
+</AccordionGroup>
