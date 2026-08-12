@@ -19,26 +19,27 @@ Use this when you want to start a negotiation without naming a price, or when yo
 
 ### Buy it Now
 
-Visitors see a fixed price and a buy button.
+Visitors see a fixed price and a Buy Now button that takes them off-site to complete payment.
 
 <Info>
-  Direct checkout is coming in a future release. Until then, **Buy it Now** domains show the price and fall back to an inquiry form — visitors can reach out to complete the purchase manually.
+  The Buy Now button is an outbound link, not an on-site checkout — it opens the **default payment provider's** purchase URL (configured in [Payment Settings](/configuration/payment-settings)), with the domain name and price substituted in. There's no webhook or automated status change: mark the domain **Sold** yourself once the sale closes.
 </Info>
 
-- Requires a **Price** to be set
-- If no price is set, the page shows "Make Offer" instead of the price
+- Requires a **Price** to be set, and a default provider configured in Payment Settings with Buy It Now enabled
+- If no price is set, or the default provider isn't eligible for this domain (see **Linked Marketplace** in Payment Settings), the button is hidden and the page falls back to an inquiry form
+- If no price is set at all, the page shows "Make Offer" instead of the price
 
 ### BIN + Make Offer
 
-Visitors see both a fixed price and an offer form.
+Visitors see both a fixed price/Buy Now button and an offer form.
 
 Use this when you want to set a ceiling while still accepting lower bids.
 
 <Info>
-  Same note as Buy it Now — direct checkout is not yet available. The price is displayed, and the offer form works normally.
+  Same Buy Now eligibility rules as above apply here — the button only shows when a price is set and the default provider is eligible for this domain. The offer form works independently either way.
 </Info>
 
-- Requires a **Price** to be set for the BIN button to appear
+- Requires a **Price** to be set for the Buy Now button to appear
 - The offer form is always visible regardless of whether a price is set
 
 ### Contact Only
@@ -60,13 +61,25 @@ Available on **Buy it Now** and **BIN + Make Offer** only. When checked, an inqu
 
 ## Summary
 
-| Model | Price shown | Buy button | Offer form | Inquiry form |
+| Model | Price shown | Buy Now button | Offer form | Inquiry form |
 |---|---|---|---|---|
 | Make an Offer | — | — | Always | Optional |
-| Buy it Now | If set | Coming soon | — | Optional |
-| BIN + Make Offer | If set | Coming soon | Always | Optional |
+| Buy it Now | If set | If eligible | — | Optional |
+| BIN + Make Offer | If set | If eligible | Always | Optional |
 | Contact Only | — | — | — | Always |
 
 <Note>
   The "Optional" entries in the Inquiry form column correspond to the **Show Inquiry Form** checkbox. Check it to add an inquiry form alongside the main CTA.
 </Note>
+
+---
+
+## The "Listed On" marketplace panel
+
+Independent of the sale model above, the domain page can also show a "Listed On" panel linking out to any marketplace checkboxes you've enabled on the domain (Afternic, Sedo, Atom — see [Domains](/concepts/domains)). This panel's prominence is controlled site-wide by **Marketplace Listings Display** in [Payment Settings](/configuration/payment-settings):
+
+| Setting | Behavior |
+|---|---|
+| **Default** | Full panel with heading and colored buttons, always shown regardless of Buy Now. |
+| **Compact** | Collapses to a single inline sentence ("Also listed on Afternic, Sedo, and Atom.") — but only once the Buy Now button is actually showing on that domain. Otherwise falls back to the full panel. |
+| **Hidden** | Never shown, unconditionally. |

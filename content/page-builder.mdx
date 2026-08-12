@@ -85,9 +85,10 @@ A feature list in cards, list rows, or icon-only layout.
 |---|---|
 | **Heading** | Optional |
 | **Style** | cards · list · icons-only |
-| **Items** | Each item: image (optional), icon (Lucide icon name, shown when no image), title, description |
+| **Columns** | 3 or 4 per row — grid styles only, hidden when Style is `list` |
+| **Items** | Each item: image (optional), icon (Lucide icon name, shown when no image), icon color (optional, shown when an icon is set), title, description |
 
-To use an icon, type the Lucide icon name in the **Icon** field — for example `Zap`, `Globe`, `CheckCircle`. Icons are pulled from the lucide-react library.
+To use an icon, type the Lucide icon name in the **Icon** field — for example `Zap`, `Globe`, `CheckCircle`. Icons are pulled from the lucide-react library. Icon color has its own preset/custom color picker — leave it empty to use the default theme color.
 
 ---
 
@@ -102,7 +103,7 @@ A numbered step-by-step process guide.
 | **Layout** | horizontal · vertical |
 | **Columns** | 3 · 4 |
 | **Card Style** | Controls the step card appearance |
-| **Steps** | Each step: image (optional), icon (Lucide name), title, description |
+| **Steps** | Each step: image (optional), icon (Lucide name), icon color (optional, shown when an icon is set), title, description |
 
 ---
 
@@ -193,7 +194,9 @@ A vertical gap between blocks.
 | Field | Options / Notes |
 |---|---|
 | **Size** | xs · sm · md · lg · xl · 2xl |
-| **Show Divider** | Adds a horizontal line through the middle of the space |
+| **Decorative Icon** | Optional image centered in the spacer |
+| **Icon Size** | auto or a fixed step (1–8), shown when an icon is set |
+| **Show Divider** | Adds a horizontal line through the middle of the space — when both the divider and an icon are set, the line splits around the icon |
 
 ---
 
@@ -333,6 +336,7 @@ The Hero block is available on the **Homepage** and on **CMS Pages**. It is not 
 | **Heading** | Required |
 | **Subheading** | Optional |
 | **Background Image** | Optional background |
+| **Overlay Color / Opacity** | Optional darkening tint over the background image — shown only when a background image is set. Opacity defaults to 0 (off); presets are grayscale, but any custom hex works too |
 | **CTA** | Optional button — label and URL |
 | **AI Matcher** | Enable to show a chat widget that suggests domains. Fields: enabled, title, description, placeholder, content, system prompt |
 

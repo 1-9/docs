@@ -73,6 +73,7 @@
           "configuration/appearance-settings",
           "configuration/ai-settings",
           "configuration/ai-prompts",
+          "configuration/payment-settings",
           "configuration/notification-settings",
           "configuration/storage-settings",
           "configuration/seo-settings",
@@ -85,7 +86,8 @@
         "pages": [
           "domains/adding-domains",
           "domains/bulk-import",
-          "domains/export"
+          "domains/export",
+          "domains/parking"
         ]
       },
       {

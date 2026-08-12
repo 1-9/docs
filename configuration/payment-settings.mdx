@@ -1,0 +1,70 @@
+---
+title: "Payment Settings"
+description: "Configure the Buy Now button as an outbound link to an external payment provider — no on-site checkout, no Stripe or escrow integration."
+---
+
+**Settings → Payments** controls the on-site **Buy Now** button and how prominently marketplace listings (Afternic, Sedo, Atom) are shown next to it.
+
+<Info>
+  Domainer Engine has no built-in payment processing. There is no Stripe checkout, no escrow integration, no webhook. **Buy Now is always an outbound link** — it takes the buyer to wherever you actually get paid: a marketplace cart link, a payment processor's hosted page, or a manual invoice. This is a deliberate design choice, not a missing feature — see [Orders](/transactions/orders) for how a sale is logged after the fact.
+</Info>
+
+## Buy Now button
+
+| Field | Purpose |
+|---|---|
+| **Buy It Now Enabled** | Master switch. Off, the Buy Now button never shows anywhere on the site, regardless of sale model or providers below. |
+| **Buy Now Button Text** | Default button label. Default: `Buy Now`. Can be overridden per-provider (see below). |
+| **Open in New Tab** | Whether clicking Buy Now opens the provider's purchase page in a new tab. |
+
+The button only appears on a domain when **all** of the following are true:
+
+1. Buy It Now Enabled is on
+2. The domain's [Sale Model](/concepts/sale-models) is **Buy it Now** or **BIN + Make Offer**
+3. The domain has a **Price** set
+4. A default payment provider is configured (below) and eligible for this domain
+
+If any of these aren't met, the domain falls back to its inquiry/offer form instead. The admin-only **BIN warning banner** on the domain edit form (and a ⚠ badge in the Domains list) flags condition 4 specifically — a mismatch between the sale model and provider eligibility — so it's never a silent gap on the live site.
+
+## Marketplace Listings Display
+
+Controls how much attention the "Listed On" panel (the Afternic/Sedo/Atom buttons under the main CTA) draws relative to Buy Now:
+
+| Option | Behavior |
+|---|---|
+| **Default** | Full panel with heading and colored buttons — always shown, regardless of Buy Now. |
+| **Compact** | Collapses to one inline sentence ("Also listed on Afternic, Sedo, and Atom.") — but only once the Buy Now button is actually showing on that domain. If Buy Now isn't showing, there's no competing CTA to protect focus for, so it falls back to the full panel. |
+| **Hidden** | Panel never renders, unconditionally. |
+
+## Payment Providers
+
+The **Payment Providers** array is where you define where the Buy Now button actually sends buyers. Add one row per provider you use.
+
+| Field | Purpose |
+|---|---|
+| **Name** | Admin-only label. Not shown on the public site. |
+| **Button Text Override** | Overrides the global Buy Now Button Text above when this is the active provider. Leave blank to use the global text. |
+| **Purchase URL** | The outbound link. Use `{domainName}` and `{price}` as placeholders — substituted per domain when the button is built, e.g. `https://spaceship.com/cart?domain={domainName}`. |
+| **Content Below Button** | Optional rich text shown under the Buy Now button on the domain page — a good place for "Secure payment via Spaceship" type reassurance copy. |
+| **Linked Marketplace** | None, Afternic, Sedo, Atom, or Spaceship. If set, this provider is only eligible on domains that have the matching marketplace checkbox enabled — see below. |
+| **Default Provider** | The provider actually used for the on-site Buy Now button across the whole site. Only one provider can be default at a time — checking this on a new row automatically un-checks any other. |
+
+### Linked Marketplace — why it matters
+
+Buy Now needs somewhere real to send the buyer. If your default provider is, say, a Spaceship cart link, that link is only valid for domains actually listed for sale on Spaceship. Setting **Linked Marketplace: Spaceship** on that provider means the Buy Now button only shows on domains where the `Spaceship` checkbox (in the domain's Marketplaces section — see [Domains](/concepts/domains)) is also checked. This stops the button from appearing on a domain that isn't actually listed with that provider yet — an unconfigured domain, or one still sitting with a previous seller.
+
+Set **Linked Marketplace: None** for providers that don't correspond to a specific marketplace — a direct payment link, an escrow service, or a generic invoice URL that works for any domain.
+
+### Spaceship (preset provider)
+
+A Spaceship provider ships pre-seeded (non-destructively — it won't overwrite providers you've already configured) with a placeholder `purchaseUrl` containing `YOUR_SELLER_ID`. Replace it with your real seller ID from **spaceship.com → Sellerhub → Settings → "Add to cart links"** before relying on it. Spaceship has no per-domain public listing page, so it's excluded from the public "Listed On" marketplace panel — see the note in [Domains](/concepts/domains#marketplaces).
+
+## Example setup
+
+A single-provider setup using a manual payment link:
+
+1. Add one row to **Payment Providers**: Name `Direct Invoice`, Purchase URL `https://pay.example.com/invoice?domain={domainName}&amount={price}`, Linked Marketplace `None`, Default Provider checked.
+2. Enable **Buy It Now Enabled**.
+3. Set the desired **Sale Model** and **Price** on individual domains.
+
+The Buy Now button now appears on every priced domain with that sale model, linking out to your invoice tool with the domain and price pre-filled.

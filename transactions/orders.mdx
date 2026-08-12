@@ -1,6 +1,6 @@
 ---
 title: "Orders"
-description: "Track domain sales in Domainer Engine from payment confirmation through transfer — order fields, status flow, and links to Stripe or Escrow.com records."
+description: "Track domain sales in Domainer Engine from payment confirmation through transfer — order fields and status flow for manually-logged sales."
 ---
 
 Go to **Transactions → Orders** in the admin panel.
@@ -8,7 +8,7 @@ Go to **Transactions → Orders** in the admin panel.
 Orders record domain sales from the moment payment is confirmed through to completed transfer. Each order links a domain, a buyer, a payment reference, and a status that moves the sale from **Paid** to **Transferred**.
 
 <Info>
-  Integrated payment processing (Stripe checkout, Escrow) is not yet implemented. Orders are currently created and managed manually. The collection is fully in place and will be wired up to payment providers in a future release.
+  There is no integrated payment processing (no Stripe checkout, no escrow webhook) — see [Payment Settings](/configuration/payment-settings) for why: Buy Now is always an outbound link to an external provider. Orders are a manual bookkeeping record by design, not a byproduct of an on-site checkout — you create one yourself after a sale closes.
 </Info>
 
 ---
@@ -23,10 +23,7 @@ Orders record domain sales from the moment payment is confirmed through to compl
 | **Amount** | Sale price in USD. |
 | **Status** | Current stage of the sale (see below). |
 | **Type** | How the sale was initiated: **Buy It Now**, **Offer**, or **Escrow**. |
-| **Stripe Payment Intent ID** | Payment Intent ID from Stripe. For future use. |
-| **Stripe Checkout Session ID** | Checkout Session ID from Stripe. For future use. |
-| **Escrow Transaction ID** | Transaction ID from Escrow.com. For future use. |
-| **Payment Link URL** | Any payment link you generated externally (Wise, PayPal, manual invoice). |
+| **Payment Link URL** | The outbound provider purchase link the buyer used, or any payment link you generated externally (Wise, PayPal, manual invoice). |
 | **Notes** | Rich text notes — internal use only. |
 | **Paid At** | Date payment was confirmed. |
 | **Transferred At** | Date domain transfer was completed. |
@@ -57,7 +54,7 @@ Orders and domain status are managed independently — changing an order's statu
 
 ## Creating an order manually
 
-Until payment processing is integrated, create orders yourself after a sale is agreed:
+Create orders yourself after a sale is agreed — Buy Now, an accepted offer, or a direct negotiation off-platform:
 
 1. Click **Create New** in the Orders list.
 2. Link the **Domain** and enter the buyer's details.

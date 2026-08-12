@@ -1,0 +1,69 @@
+---
+title: "Domain Parking (Cloudflare)"
+description: "Point idle or unlisted domains at Cloudflare and redirect them straight to their listing page on your marketplace — zone setup, verification, and TXT record management."
+---
+
+**Settings → Parking** (Cloudflare credentials) and the **Parking** admin page (`/admin/parking`, also reachable from the sidebar) let you take a domain you own, point its nameservers at Cloudflare, and have it redirect visitors straight to that domain's listing page on your marketplace — entirely at the Cloudflare edge, without the domain ever needing to be hosted or touch this app's origin.
+
+<Info>
+  Parking a domain doesn't create it in your inventory. Add the domain to the **Domains** collection first — parking only redirects traffic for domains that already have a listing here.
+</Info>
+
+## One-time setup
+
+1. In Cloudflare, generate an API token with `Zone: Edit`, `Zone: Read`, and `DNS: Edit` permissions (scoped to the account you'll park domains under).
+2. Find your **Cloudflare Account ID** on the right sidebar of any zone's Overview page in the Cloudflare dashboard.
+3. Go to **Settings → Parking** and fill in **Cloudflare Account ID** and **Cloudflare API Token** (the token is masked after saving, same as other secret fields in this platform).
+4. Optionally set a **Fallback Destination** — where parked traffic goes if the domain has no matching listing (defaults to your homepage). This only fires for genuinely orphaned traffic; it's not the normal redirect target.
+
+## Adding domains to parking
+
+Two ways in:
+
+- From the **Parking** page, click **Add domain(s)** — opens a picker filtered to domains not yet tracked.
+- From the **Domains** list, select rows and click **Park Selected** (bulk action above the table) — pre-seeds the same picker.
+
+Either way, nothing happens in Cloudflare until you confirm the selection and click **Add N to Cloudflare** — this creates a Cloudflare zone per domain and returns the nameservers you need to set at your registrar.
+
+## Status flow
+
+```
+pending ──► active ──► parked
+                            │
+                            └──► (Unpark) back to active, zone stays intact
+```
+
+| Status | Meaning |
+|---|---|
+| **Pending** | Zone created in Cloudflare, waiting on the nameservers shown in the table to be set at your registrar. |
+| **Active** | Nameservers verified by Cloudflare — not redirecting yet. |
+| **Parked** | Redirect rule and placeholder DNS are live — visiting the domain sends visitors straight to its listing page here. |
+| **Error** | Something went wrong in Cloudflare (zone deleted outside this system, API error, etc.) — check the message on the row. |
+
+Click **Sync now** to pull the latest zone status from Cloudflare for all tracked domains (this also runs automatically every time the Parking page loads). Once a domain reaches **Active**, click **Verify** if it hasn't already flipped, then **Park** to go live.
+
+## TXT records
+
+Some marketplaces (Afternic, Sedo) require a TXT record on the domain to prove ownership before they'll list it. Configure these once under **Settings → Parking → TXT Records** (label, host, value — e.g. one row per marketplace), then push them to every active/parked domain with **Push TXT to all**, or to a selection with **Push TXT to selected** on the Parking page.
+
+The **TXT** column shows whether the last push is still accurate:
+
+| Status | Meaning |
+|---|---|
+| **OK** | Matches what's configured in Settings → Parking. |
+| **Stale** | Configured records changed since the last push — re-push to update. |
+| **—** | Never checked. |
+
+TXT status doesn't update automatically — click **Check TXT** to refresh it without pushing. Click **TXT** on an individual row to open the manual record manager for that zone, which shows and lets you edit *all* live DNS records (ours and any pre-existing ones) — useful for cleanup during zone onboarding.
+
+<Note>
+  Records this system creates are tagged internally with a comment prefix so a bulk push or refresh only ever touches records it created itself — anything Cloudflare imported from the domain's previous DNS provider, or that you added manually, is left alone.
+</Note>
+
+## Unparking
+
+**Unpark** removes the redirect rule and the placeholder DNS records but leaves the Cloudflare zone itself intact — fully reversible. Re-parking later doesn't require redoing nameserver verification.
+
+## Reconciliation
+
+Every time the Parking page loads, it reconciles Cloudflare's full zone list against your tracked domains in both directions — flagging zones that exist in Cloudflare with no matching tracked domain, and tracked domains whose zone has vanished from Cloudflare (surfaced as an **Error** status). This is a cheap account-wide check, independent of how many domains you're parking.

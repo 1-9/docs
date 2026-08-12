@@ -21,7 +21,7 @@ The domain edit form is divided into sections. The sidebar contains the status, 
 ### Pricing & Sale Terms
 
 <Info>
-  Direct checkout and payment processing are not yet implemented. Prices are displayed to buyers, but the purchase flow is handled manually — buyers contact you through the offer or inquiry form to complete the transaction. Payment integration may be added in a future release.
+  There is no on-site checkout. **Buy Now** is an outbound link to the default provider configured in [Payment Settings](/configuration/payment-settings) (e.g. Spaceship, Efty, or a manual invoice link) — the buyer completes payment off-site. Domain status is never changed automatically; you update it yourself once a sale closes.
 </Info>
 
 | Field | Purpose |
@@ -77,31 +77,32 @@ Populated automatically via RDAP when you save a new domain name. You can unchec
 
 ### Marketplaces
 
-Toggle checkboxes for **Afternic**, **Sedo**, **Atom**, and **SAW**. When checked, the corresponding marketplace link appears on the domain page under the main CTA. You can also add custom marketplace links with a label and URL.
+Toggle checkboxes for **Afternic**, **Sedo**, **Atom**, and **Spaceship**. When checked, the corresponding badge/link appears in the "Listed On" panel on the domain page (see [Sale Models](/concepts/sale-models) for how this panel relates to Buy Now). You can also add custom marketplace links with a label and URL.
+
+<Note>
+  **Spaceship** is a special case — it has no public per-domain listing page, only a seller-unique cart link. Its checkbox never produces a public "Buy on Spaceship" button; it exists purely to gate a payment provider in [Payment Settings](/configuration/payment-settings) (`Linked Marketplace`), so Buy Now only shows once you've confirmed the domain is actually listed there.
+</Note>
 
 ---
 
 ## Status
 
-Every domain has one of four statuses:
+Every domain has one of three statuses:
 
 | Status | Meaning |
 |---|---|
 | **Available** | Listed for sale. The domain page is public and fully functional. |
-| **Pending** | A checkout session is in progress. The domain is reserved for up to 30 minutes. |
 | **Sold** | Sale completed. Shown as sold on the site (display mode controlled by SEO settings). |
 | **Transferred** | Domain has been transferred to the buyer. Typically set manually after completing the transfer. |
 
 <Warning>
-  Status is changed only by: Stripe payment webhooks (available → pending → sold), the expiry cron (pending → available when reservation expires), or manual admin action. Never change status directly from the domain page URL — always use the admin panel.
+  Status is changed only by manual admin action — there is no on-site checkout to reserve inventory for, so nothing changes it automatically. Update it yourself once a sale closes on whatever provider or channel you used (Buy Now link, marketplace, direct negotiation).
 </Warning>
 
 ### Status flow
 
 ```
-available ──► pending ──► sold ──► transferred
-                │
-                └──► available  (reservation expired)
+available ──► sold ──► transferred
 ```
 
 ---
