@@ -26,7 +26,7 @@ Visitors see a fixed price and a Buy Now button that takes them off-site to comp
 </Info>
 
 - Requires a **Price** to be set, and a default provider configured in Payment Settings with Buy It Now enabled
-- If no price is set, or the default provider isn't eligible for this domain (see **Linked Marketplace** in Payment Settings), the button is hidden and the page falls back to an inquiry form
+- If no price is set, the default provider isn't eligible for this domain (see **Linked Marketplace** in Payment Settings), or the domain's own **Hide Buy Now Button** checkbox is on, the button is hidden and the page falls back to an inquiry form
 - If no price is set at all, the page shows "Make Offer" instead of the price
 
 ### BIN + Make Offer
@@ -56,6 +56,14 @@ Use this for premium domains where you want to qualify buyers before revealing a
 ## The Show Inquiry Form checkbox
 
 Available on **Buy it Now** and **BIN + Make Offer** only. When checked, an inquiry form is added below the main CTA. Use it when you want to let buyers ask a question without committing to a full offer.
+
+---
+
+## The Hide Buy Now Button checkbox
+
+Also available on **Buy it Now** and **BIN + Make Offer**, right below Show Inquiry Form. Check it to suppress the Buy Now button on this one domain only — regardless of price, Payment Settings, or provider eligibility. Marketplace buttons and the offer form are unaffected.
+
+Use it for a domain you want off the market temporarily (under negotiation elsewhere, price under review) without switching its sale model or clearing its price. It also silences the admin-only BIN warning banner for that domain, since hiding the button was a deliberate choice, not a misconfiguration.
 
 ---
 

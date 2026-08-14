@@ -1,0 +1,38 @@
+---
+title: "Messenger Settings"
+description: "Let visitors contact you directly on WhatsApp or Telegram from a domain page — configured once, with no chat widget script and no exposed phone number."
+---
+
+**Settings → Messengers** controls the **Contact Messengers** widget — direct WhatsApp / Telegram buttons available on the Default template and any [Landing Page](/domains/landing-pages).
+
+## WhatsApp
+
+| Field | Purpose |
+|---|---|
+| **Enabled** | Turns the WhatsApp button on site-wide. |
+| **Number** | Digits only, with country code, no `+` or spaces — e.g. `15551234567`. |
+| **Pre-filled Message** | Shown in the visitor's WhatsApp compose box before they send it. Use `{{domainName}}` as a placeholder — substituted per domain. |
+
+## Telegram
+
+| Field | Purpose |
+|---|---|
+| **Enabled** | Turns the Telegram button on site-wide. |
+| **Username** | Without the `@` symbol. |
+| **Pre-filled Message** | Same as WhatsApp — supports `{{domainName}}`. |
+
+## How it protects your number from scraping
+
+Your WhatsApp number and Telegram username are never written into the page's HTML or any script the browser downloads. The button links to the platform's own domain, not directly to `wa.me`/`t.me` — clicking it hits a same-origin redirect that looks up your real contact info on the server and forwards the visitor on. A bot scanning your page source for phone numbers or usernames finds nothing to harvest.
+
+<Info>
+  There's no CAPTCHA, no rate limiter, and no contact form to protect here — the button is a plain outbound link, not a form submission, so there's nothing for a spam bot to submit in the first place. The only thing worth protecting is the contact value itself, and that's handled by never exposing it.
+</Info>
+
+## Hiding it on specific domains
+
+Enabling a channel here turns it on site-wide. To hide the whole widget on one domain — a premium listing you're handling personally through a different channel, for example — check **Hide Contact Messengers** in that domain's sidebar. There's no per-channel override; it's all or nothing per domain, matching how the widget is actually used.
+
+## Where it appears
+
+**Contact Messengers** is a sidebar widget block, like Inquiry Form or Marketplace Buttons — add, remove, or reorder it from **Templates → Domain** (or a specific [Landing Page](/domains/landing-pages)'s Right Column). See [Templates](/content/templates#sidebar-widgets).

@@ -74,6 +74,7 @@
           "configuration/ai-settings",
           "configuration/ai-prompts",
           "configuration/payment-settings",
+          "configuration/messenger-settings",
           "configuration/notification-settings",
           "configuration/storage-settings",
           "configuration/seo-settings",
