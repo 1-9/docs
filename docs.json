@@ -87,7 +87,8 @@
           "domains/adding-domains",
           "domains/bulk-import",
           "domains/export",
-          "domains/parking"
+          "domains/parking",
+          "domains/landing-pages"
         ]
       },
       {

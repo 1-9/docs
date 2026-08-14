@@ -1,0 +1,63 @@
+---
+title: "Landing Pages"
+description: "Give specific domains an alternate page layout — different column ratio, header style, and price sidebar copy — while sharing the same block system as the Default template."
+---
+
+Every domain page normally follows the **Domain** template (**Templates → Domain** — see [Templates](/content/templates)). **Landings** (**Domains → Landings** in the sidebar) let you define alternate layouts and assign them to specific domains, without touching the shared Default layout.
+
+## When to use a Landing Page
+
+- A premium domain that deserves a punchier, logo-forward header instead of the standard breadcrumb-and-title layout.
+- A batch of parked domains that should all share one simpler layout by default, distinct from your regular inventory pages.
+- Testing a different column ratio or price-panel copy on a subset of domains without affecting the rest.
+
+## Which layout a domain uses
+
+Resolved in this order — first match wins:
+
+1. **Landing Page Layout** — set directly on the domain (sidebar field on the Domains edit view).
+2. **Settings → Parking → Default Landing Template** — site-wide fallback, mainly for parked-domain traffic with no per-domain override.
+3. **Templates → Domain** (the "Default" layout) — always present, used when neither of the above is set.
+
+<Info>
+  A domain's own **Landing Page Layout** always wins, whether the visitor arrived directly or through a [parked domain](/domains/parking) redirect. The Parking fallback only applies when the domain has no Landing Page of its own.
+</Info>
+
+## Creating a Landing Page
+
+Go to **Domains → Landings → Create New**.
+
+| Field | Purpose |
+|---|---|
+| **Name** | Admin-only label to identify this layout in lists and pickers. Not shown on the public site. |
+| **Column Ratio** | **Asymmetric** — the standard wide-content / narrow-sidebar layout (sidebar stays sticky while scrolling). **Equal** — two even columns; the right column isn't sticky, since an equal-width column routinely holds as much content as the left. |
+| **Header Style** | See below. |
+| **Description Card Style** | Wraps the domain's description and tags in the same bordered-card treatment used by the Perfect Match For / Use Cases modules, instead of plain text. |
+
+### Header styles
+
+| Style | Shows |
+|---|---|
+| **Text** | The original look: breadcrumbs, H1, category badges, description, tags. |
+| **Logo Card** | A large two-tone headline ("`{domain}` is for sale!", with the domain name gradient-clipped using the domain's Brand Color) plus a large logo/preview tile. No breadcrumbs, category badge, or tags. |
+| **Logo Card + Meta** | Same as Logo Card, plus a neutral category badge under the headline and tags under the description. |
+
+<Note>
+  Breadcrumb structured data (for search engines) is emitted regardless of header style — only the *visible* trail is affected. A header style that hides it can still show it explicitly by adding the **Breadcrumbs** module to a zone.
+</Note>
+
+### Price Sidebar Override
+
+Nine fields mirroring the Default template's Price Sidebar Settings (see [Templates → Price Sidebar Settings](/content/templates#price-sidebar-settings)) — heading and button text for the price panel, offer form, inquiry form, and marketplaces panel. Leave any field blank to inherit the Default template's value; the field shows the live Default value as placeholder text, so an empty override doesn't read as broken.
+
+### Zones and blocks
+
+Landing Pages use the exact same **Above / Left Column / Right Column / Below** zone system, domain modules, sidebar widgets, and general blocks as the Default template — see [Templates → Domain](/content/templates#domain) for the full reference. Content on each Landing Page is fully independent: editing one doesn't affect the Default template or any other Landing Page.
+
+## Assigning a Landing Page to a domain
+
+Open the domain, and in the sidebar set **Landing Page Layout** to the layout you want. Leave it empty to use the Default template (or the Parking fallback, if configured).
+
+## Parked-domain fallback
+
+To give *all* domains without their own Landing Page a particular layout when reached through a parked redirect, set **Settings → Parking → Default Landing Template**. This only applies as a fallback — any domain with its own Landing Page Layout always uses that instead, whether the visit came through parking or not.

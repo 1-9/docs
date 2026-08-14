@@ -67,3 +67,11 @@ TXT status doesn't update automatically — click **Check TXT** to refresh it wi
 ## Reconciliation
 
 Every time the Parking page loads, it reconciles Cloudflare's full zone list against your tracked domains in both directions — flagging zones that exist in Cloudflare with no matching tracked domain, and tracked domains whose zone has vanished from Cloudflare (surfaced as an **Error** status). This is a cheap account-wide check, independent of how many domains you're parking.
+
+## Traffic source in Analytics
+
+Visits that arrive through a parked-domain redirect are tracked as their own referrer source — **Parking Redirect** — in the Dashboard and per-domain Analytics, rather than being lumped in with direct traffic. A browser doesn't send a referrer on a fresh edge redirect, so without this distinction parked visits would be indistinguishable from someone typing the URL directly.
+
+## Alternate layout for parked traffic
+
+By default, a domain reached through a parked redirect uses the same page layout as everyone else. If you'd rather show parked visitors a simpler, more conversion-focused layout, set **Settings → Parking → Default Landing Template** to one of your [Landing Pages](/domains/landing-pages) — it only applies as a fallback for domains that don't already have their own Landing Page assigned.
