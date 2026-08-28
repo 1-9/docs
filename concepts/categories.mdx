@@ -17,6 +17,16 @@ Each domain has one **Primary Category** — this determines which category page
 
 Category assignment can be done manually or via AI. The AI categorization prompt has access to the full list of your categories, so it picks from what you actually have.
 
+### Empty categories
+
+A category with no available domains still exists and its page still renders (with a friendly "no domains yet" message) — it's never deleted or redirected automatically. But until it has at least one available domain, the platform hides it from SEO and from auto-generated listings:
+
+- The category page is marked `noindex` (still crawlable via `follow`, just not shown in search results).
+- It's excluded from `sitemap.xml`.
+- It's hidden from the `/categories` index and from any Category Grid block (e.g. on the homepage).
+
+As soon as a domain is assigned to the category, it reappears everywhere automatically — no manual toggle needed. Note this doesn't apply to links you've added by hand in the header/footer navigation menu; those are static and won't hide themselves.
+
 ### Category fields
 
 | Field | Purpose |

@@ -31,15 +31,21 @@ Connect a GA4 property to get Google's reporting alongside the built-in tracker.
 | **Enable Google Analytics 4** | Loads the GA4 script after visitor consent. |
 | **GA4 Measurement ID** | Your property ID, e.g. `G-XXXXXXXXXX`. Found in Google Analytics → Admin → Data Streams. |
 
-<Note>
-  GA4 requires visitor consent before loading. Enabling GA4 automatically activates the cookie banner on the public site.
-</Note>
-
 ### Cookie banner
 
-When GA4 is enabled, a cookie consent banner is shown to visitors on their first visit. The GA4 script loads only after the visitor clicks **Accept**.
+When GA4 is enabled, a **Consent Mode** setting controls whether — and to whom — a cookie banner is shown before the GA4 script loads:
 
-Customize the banner text to match your site's tone:
+| Mode | Behavior |
+|---|---|
+| **Always show** (default) | Every visitor sees the banner before GA4 loads. Unchanged from prior behavior. |
+| **EU visitors only** | The banner only gates GA4 for visitors detected in the EU, EEA, or UK — everyone else gets GA4 immediately, no banner. Detection is server-side, from the request's country; if the country can't be determined, it defaults to showing the banner (the safe fallback). |
+| **Off (no banner)** | GA4 loads for every visitor immediately, with no consent prompt at all. |
+
+<Warning>
+  **Off** loads GA4 with no consent gate for anyone — a real GDPR/ePrivacy risk if you have EU visitors. The admin panel shows a warning next to this setting when it's selected. Only use it if you have another consent mechanism in place, or GA4 usage that genuinely doesn't require consent in your jurisdiction.
+</Warning>
+
+When the banner does show, customize its text to match your site's tone:
 
 | Field | Default |
 |---|---|
@@ -47,4 +53,4 @@ Customize the banner text to match your site's tone:
 | **Accept button** | `Accept` |
 | **Decline button** | `Decline` |
 
-If the visitor declines, the GA4 script is never loaded. The built-in analytics tracker is unaffected — it runs regardless of consent since it uses no cookies.
+If the visitor declines, the GA4 script is never loaded. The built-in analytics tracker is unaffected in every mode — it runs regardless of consent since it uses no cookies.

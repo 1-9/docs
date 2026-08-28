@@ -1,0 +1,29 @@
+---
+title: "Live Preview"
+description: "See template changes rendered on the actual public page layout while you edit, before you save."
+---
+
+Every block-based template — **Home**, **Domain**, **Category**, **Categories**, **Blog**, and each **Landing Page** — has a **Live Preview** panel next to the editing form. It shows the real public page, updating as you work, so you don't have to save and reload the site to see how a change looks.
+
+## Using it
+
+Open any template (**Templates**, or **Domains → Landings → [a landing page]**) — the preview panel appears automatically on the right, with a device-width switcher above it.
+
+Edits appear in the preview a moment after you stop typing or change a field. There's a short debounce, so it won't refresh on every keystroke — expect roughly half a second between when you stop editing and when the preview catches up.
+
+<Note>
+  The preview always reflects your **unsaved** edits. The real published page — what visitors currently see — is untouched until you click Save. You can safely experiment and reload the admin page to discard changes.
+</Note>
+
+## Jumping to a block
+
+Every block in the editor has a small locate icon in its header, next to the block number and type. Click it to scroll the preview panel straight to that block — useful once a template has more than a handful of blocks and you don't want to hunt for the one you're editing.
+
+## Which record the preview shows
+
+- **Home**, **Category**, **Categories**, **Blog**, and **Domain** templates preview against a representative real record from your site (an actual category, an actual domain, etc.) picked automatically. If your site has no matching content yet, the preview panel won't appear until it does.
+- Each **Landing Page** previews against a domain actually assigned to that layout, so what you see matches what a real visitor to that domain would get.
+
+## What it doesn't affect
+
+Live Preview is purely a viewing aid — it never touches the published page or any other visitor's experience. Nothing renders differently on the live site until you click Save on the template itself.

@@ -42,6 +42,13 @@ pending ──► active ──► parked
 
 Click **Sync now** to pull the latest zone status from Cloudflare for all tracked domains (this also runs automatically every time the Parking page loads). Once a domain reaches **Active**, click **Verify** if it hasn't already flipped, then **Park** to go live.
 
+An **Error** row shows one of two recovery actions, depending on what actually failed:
+
+- **Retry** — the zone was never created (most often because a Cloudflare zone for that domain already existed from earlier testing, or the account's new-zone limit was hit). Retrying re-runs the add step, adopting a pre-existing zone if it finds one.
+- **Verify** — the zone exists in Cloudflare but its tracked status has drifted (e.g. it was deleted directly in the Cloudflare dashboard).
+
+Either way, if a row is stuck with no useful next step, **Remove** clears it from parking entirely (best-effort deleting the Cloudflare zone first) so you can start over.
+
 ## TXT records
 
 Some marketplaces (Afternic, Sedo) require a TXT record on the domain to prove ownership before they'll list it. Configure these once under **Settings → Parking → TXT Records** (label, host, value — e.g. one row per marketplace), then push them to every active/parked domain with **Push TXT to all**, or to a selection with **Push TXT to selected** on the Parking page.
@@ -71,6 +78,10 @@ Every time the Parking page loads, it reconciles Cloudflare's full zone list aga
 ## Traffic source in Analytics
 
 Visits that arrive through a parked-domain redirect are tracked as their own referrer source — **Parking Redirect** — in the Dashboard and per-domain Analytics, rather than being lumped in with direct traffic. A browser doesn't send a referrer on a fresh edge redirect, so without this distinction parked visits would be indistinguishable from someone typing the URL directly.
+
+## Assigning a Landing Page from this table
+
+The table also has a **Landing** column with a picker for each domain's [Landing Page](/domains/landing-pages) layout — handy for setting it while you're already here parking a batch of domains, instead of opening each one individually.
 
 ## Alternate layout for parked traffic
 

@@ -34,6 +34,10 @@ Controls what happens to domain pages after a domain is marked as sold:
 
 When **Trophy page** or **Listed** is selected, you can customize the sold banner text shown on those pages.
 
+## Empty category pages
+
+Category pages with zero available domains are automatically marked `noindex` and excluded from `sitemap.xml` — there's nothing to configure here, it's automatic. The page keeps working for anyone who visits it directly; it just won't compete for search rankings while it's empty. See [Categories](/concepts/categories#empty-categories) for details.
+
 ## Search engine verification
 
 Paste the verification codes from Google Search Console and Bing Webmaster Tools. These are injected as `<meta>` tags in the site `<head>` — no file upload needed.

@@ -1,0 +1,56 @@
+---
+title: "MCP Server (AI Connector)"
+description: "Connect Claude, ChatGPT, or any MCP-compatible AI client directly to your marketplace, so you can manage domains, content, and deals through chat instead of the admin panel."
+---
+
+Your marketplace ships with a built-in **MCP server** — a standard connector protocol that lets an AI client like Claude.ai or ChatGPT talk to your site directly. Once connected, you can ask it to list your available domains, draft a blog post, respond to an offer, or pull your analytics for the week, and it acts on your real data through the same API your admin panel uses.
+
+<Warning>
+  A connected AI client has the same effective access as your own admin login. Only connect clients you trust, and treat approving a connection the same way you'd treat sharing your admin password.
+</Warning>
+
+## Connecting from Claude.ai
+
+1. In Claude.ai, go to **Settings → Connectors → Add custom connector**.
+2. Enter your site's MCP endpoint: `https://yoursite.com/api/mcp`.
+3. Claude registers itself automatically and redirects you to log in with your admin account (if you're not already signed in to `/admin`).
+4. You'll land on a consent screen — **Approve** to finish connecting, or **Deny** to cancel.
+
+## Connecting from ChatGPT or other MCP clients
+
+Any MCP-compatible client that supports OAuth discovery works the same way — point it at `https://yoursite.com/api/mcp` and it will find everything else itself via standard discovery endpoints (`/.well-known/oauth-authorization-server`, `/.well-known/oauth-protected-resource`). The login-and-approve flow is identical regardless of which client you're connecting.
+
+## What it can do
+
+| Category | Examples |
+|---|---|
+| **Domains** | Search your portfolio, look up a single domain, update price/status/sale model/description/tags/categories/marketplace listings |
+| **Categories** | Search, view, create, and update categories |
+| **Blog posts & pages** | Search, view, create, and update posts; update a CMS page's title, subheading, and SEO fields |
+| **Offers & inquiries** | List and view incoming offers/inquiries, respond to them (accept, reject, or counter) |
+| **Orders** | Create and update manual sale records |
+| **Forms** | List submitted form entries |
+| **Analytics** | Pull per-domain analytics and dashboard KPIs for any period |
+| **Settings** | Read your current configuration for any settings page (secrets are always redacted — see below) |
+
+## Confirming offer and inquiry responses
+
+Accepting, rejecting, or countering an offer or inquiry sends a real email to a real buyer, so this isn't a single tool call. The AI first proposes the action and shows you what it's about to do, then a second confirmation step actually applies it. This two-step gate exists specifically because not every AI client is guaranteed to show you an approval prompt before acting — the confirmation lives in the connector itself rather than relying on the client's UI.
+
+## What's off-limits
+
+To keep the connector's reach predictable, it can't touch:
+
+- **Technical Dossier** fields (RDAP data) or **Parking** configuration
+- Any credential or API key field — `get_settings` always returns `[REDACTED]` for secrets, never the real value
+- Page Builder blocks/sections on Pages or templates
+- Media uploads
+- The Import/Export wizards
+
+## Revoking access
+
+There's no dedicated "disconnect" button yet. To cut off a connected client, go directly to `/admin/collections/oauth-tokens` and delete its token rows (these collections are intentionally left out of the sidebar, but reachable at that URL for exactly this purpose). To also stop it from being able to reconnect silently, delete its matching row in `/admin/collections/oauth-clients` too — it will have to register and get your approval again from scratch.
+
+## Every action is logged
+
+Every tool call — successful or not — is recorded with the tool name, the input, and a result summary, giving you a full audit trail of everything an AI client has done on your site.

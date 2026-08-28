@@ -33,6 +33,7 @@ Go to **Domains → Landings → Create New**.
 | **Column Ratio** | **Asymmetric** — the standard wide-content / narrow-sidebar layout (sidebar stays sticky while scrolling). **Equal** — two even columns; the right column isn't sticky, since an equal-width column routinely holds as much content as the left. |
 | **Header Style** | See below. |
 | **Description Card Style** | Wraps the domain's description and tags in the same bordered-card treatment used by the Perfect Match For / Use Cases modules, instead of plain text. |
+| **Deal Section Spacing** | Top and bottom padding of the two-column content area (None / XS / S / M / L / XL) — independent from the Default template's own setting. |
 
 ### Header styles
 
@@ -40,7 +41,9 @@ Go to **Domains → Landings → Create New**.
 |---|---|
 | **Text** | The original look: breadcrumbs, H1, category badges, description, tags. |
 | **Logo Card** | A large two-tone headline ("`{domain}` is for sale!", with the domain name gradient-clipped using the domain's Brand Color) plus a large logo/preview tile. No breadcrumbs, category badge, or tags. |
-| **Logo Card + Meta** | Same as Logo Card, plus a neutral category badge under the headline and tags under the description. |
+| **Logo Card + Meta** | Same as Logo Card, plus a neutral category badge under the headline and tags under the description. "Show on same line" places the headline and badge side by side instead of stacked. |
+
+On Logo Card layouts, the headline's suffix text (default "is for sale!") is editable right on the layout. If you need more control over the headline — a different position, or mixing it with other blocks — add the **Domain Headline** module (see [Templates → Domain modules](/content/templates#domain-modules)) to any zone; doing so replaces the built-in headline entirely, so it's only rendered once either way.
 
 <Note>
   Breadcrumb structured data (for search engines) is emitted regardless of header style — only the *visible* trail is affected. A header style that hides it can still show it explicitly by adding the **Breadcrumbs** module to a zone.
@@ -57,6 +60,8 @@ Landing Pages use the exact same **Above / Left Column / Right Column / Below** 
 ## Assigning a Landing Page to a domain
 
 Open the domain, and in the sidebar set **Landing Page Layout** to the layout you want. Leave it empty to use the Default template (or the Parking fallback, if configured).
+
+If you're already on the [Parking](/domains/parking) page working through a batch of domains, there's a **Landing** column right in the table — pick the layout there instead of opening each domain individually.
 
 ## Parked-domain fallback
 

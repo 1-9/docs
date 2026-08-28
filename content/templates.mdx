@@ -37,6 +37,15 @@ Controls the **Default** layout used by every domain detail page (`/domains/{nam
 | **Right Column** | The sticky sidebar. The price/offer panel is always shown at the top of the right column regardless of configuration — it is not a configurable block. |
 | **Below** | Full-width blocks rendered after the main content area. |
 
+### Layout settings
+
+Alongside the zones, two fields control spacing and presentation independent of any block:
+
+| Field | Purpose |
+|---|---|
+| **Description Card Style** | Wraps the domain's description and tags in the same bordered-card treatment used by the Perfect Match For / Use Cases modules, instead of plain text. |
+| **Deal Section Spacing** | Controls the top and bottom padding of the two-column content area (None / XS / S / M / L / XL). |
+
 ### Price Sidebar Settings
 
 Before the zone layout, there is a **Price Sidebar Settings** group that controls the text shown in the price/offer panel that appears at the top of every domain page sidebar:
@@ -71,6 +80,8 @@ The following modules are specific to domain pages and can be placed in the Left
 | **Branding Playground** | Brand color preview widget. |
 | **Similar Domains** | Grid of up to 4 related domains from the domain's Similar Domains field. |
 | **Split Row** | Two modules side by side in a 2-column layout. Choose which module goes left and which goes right. |
+| **Domain Headline** | The domain name, suffix text, and category badge — placeable in any zone. On a [Landing Page](/domains/landing-pages) with the Logo Card header style, adding this module lets you reposition or restyle the headline instead of using the built-in default. |
+| **Breadcrumbs** | A standalone breadcrumb trail, for layouts whose header doesn't already show one inline. |
 
 ### Sidebar widgets
 
@@ -155,4 +166,6 @@ All general page builder blocks are also available.
 
 ## How changes take effect
 
-Template changes apply to all pages of that type immediately after saving. There is no per-domain or per-category override — the template is global. Changes are cached and propagated to the public site automatically.
+Template changes apply to all pages of that type immediately after saving. There is no per-domain or per-category override — the template is global (except for a domain's own [Landing Page](/domains/landing-pages) assignment). Changes are cached and propagated to the public site automatically.
+
+Every template also has a [Live Preview](/content/live-preview) panel, so you can see how a change looks against a real page before you save.

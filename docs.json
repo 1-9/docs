@@ -99,6 +99,7 @@
           "content/pages",
           "content/page-builder",
           "content/templates",
+          "content/live-preview",
           "content/blog",
           "content/navigation"
         ]
@@ -110,6 +111,13 @@
           "transactions/inquiries",
           "transactions/offers",
           "transactions/orders"
+        ]
+      },
+      {
+        "group": "Integrations",
+        "icon": "plug",
+        "pages": [
+          "integrations/mcp-server"
         ]
       },
       {
