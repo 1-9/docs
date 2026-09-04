@@ -1,15 +1,15 @@
 ---
 title: "Landing Pages"
-description: "Give specific domains an alternate page layout — different column ratio, header style, and price sidebar copy — while sharing the same block system as the Default template."
+description: "Give specific domains an alternate page layout — different column ratio and block arrangement — while sharing the same block system as the Default template."
 ---
 
 Every domain page normally follows the **Domain** template (**Templates → Domain** — see [Templates](/content/templates)). **Landings** (**Domains → Landings** in the sidebar) let you define alternate layouts and assign them to specific domains, without touching the shared Default layout.
 
 ## When to use a Landing Page
 
-- A premium domain that deserves a punchier, logo-forward header instead of the standard breadcrumb-and-title layout.
+- A premium domain that deserves a punchier, logo-forward header instead of the standard breadcrumb-and-title layout — build it from the same [Domain Headline / Category Badges / Domain Description modules](/content/templates#domain-modules) the Default template uses, just arranged differently.
 - A batch of parked domains that should all share one simpler layout by default, distinct from your regular inventory pages.
-- Testing a different column ratio or price-panel copy on a subset of domains without affecting the rest.
+- Testing a different column ratio or block arrangement on a subset of domains without affecting the rest.
 
 ## Which layout a domain uses
 
@@ -30,28 +30,21 @@ Go to **Domains → Landings → Create New**.
 | Field | Purpose |
 |---|---|
 | **Name** | Admin-only label to identify this layout in lists and pickers. Not shown on the public site. |
-| **Column Ratio** | **Asymmetric** — the standard wide-content / narrow-sidebar layout (sidebar stays sticky while scrolling). **Equal** — two even columns; the right column isn't sticky, since an equal-width column routinely holds as much content as the left. |
-| **Header Style** | See below. |
-| **Description Card Style** | Wraps the domain's description and tags in the same bordered-card treatment used by the Perfect Match For / Use Cases modules, instead of plain text. |
+| **Column Ratio** | **Equal** — two even columns; the right column isn't sticky, since an equal-width column routinely holds as much content as the left. **Narrow-Wide** / **Wide-Narrow** — an asymmetric split (sticky right column) in either direction. |
 | **Deal Section Spacing** | Top and bottom padding of the two-column content area (None / XS / S / M / L / XL) — independent from the Default template's own setting. |
 
-### Header styles
+### Building the header
 
-| Style | Shows |
-|---|---|
-| **Text** | The original look: breadcrumbs, H1, category badges, description, tags. |
-| **Logo Card** | A large two-tone headline ("`{domain}` is for sale!", with the domain name gradient-clipped using the domain's Brand Color) plus a large logo/preview tile. No breadcrumbs, category badge, or tags. |
-| **Logo Card + Meta** | Same as Logo Card, plus a neutral category badge under the headline and tags under the description. "Show on same line" places the headline and badge side by side instead of stacked. |
+There's no header style preset to pick from — a Landing Page's header is whatever combination of modules you place in the Left Column (or Above), same as the Default template. To recreate a common look:
 
-On Logo Card layouts, the headline's suffix text (default "is for sale!") is editable right on the layout. If you need more control over the headline — a different position, or mixing it with other blocks — add the **Domain Headline** module (see [Templates → Domain modules](/content/templates#domain-modules)) to any zone; doing so replaces the built-in headline entirely, so it's only rendered once either way.
+- **Plain text header**: **Breadcrumbs**, then **Domain Headline**, then **Category Badges**, then **Domain Description**.
+- **Logo-forward header**: **Domain Headline** (with the suffix set, e.g. "is for sale!") next to a **Domain Logo Card**, skipping Breadcrumbs and Category Badges for a cleaner look — add **Category Badges** back in if you want a neutral badge under the headline.
+
+See [Templates → Domain modules](/content/templates#domain-modules) for the full field reference on each of these.
 
 <Note>
-  Breadcrumb structured data (for search engines) is emitted regardless of header style — only the *visible* trail is affected. A header style that hides it can still show it explicitly by adding the **Breadcrumbs** module to a zone.
+  Breadcrumb structured data (for search engines) is emitted regardless of whether the **Breadcrumbs** module is placed — only the *visible* trail depends on it.
 </Note>
-
-### Price Sidebar Override
-
-Nine fields mirroring the Default template's Price Sidebar Settings (see [Templates → Price Sidebar Settings](/content/templates#price-sidebar-settings)) — heading and button text for the price panel, offer form, inquiry form, and marketplaces panel. Leave any field blank to inherit the Default template's value; the field shows the live Default value as placeholder text, so an empty override doesn't read as broken.
 
 ### Zones and blocks
 

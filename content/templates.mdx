@@ -28,60 +28,43 @@ The [Hero block](/content/page-builder#hero-block) is only available on the home
 
 **Templates → Domain**
 
-Controls the **Default** layout used by every domain detail page (`/domains/{name}`) that doesn't have its own [Landing Page](/domains/landing-pages) assigned. Individual domains can opt into an alternate header style, column ratio, or price sidebar copy via **Domains → Landings** without affecting this template. The domain page has four distinct zones:
+Controls the **Default** layout used by every domain detail page (`/domains/{name}`) that doesn't have its own [Landing Page](/domains/landing-pages) assigned. Individual domains can opt into an alternate column ratio or block arrangement via **Domains → Landings** without affecting this template. The domain page has four distinct zones — everything in them, including the price panel and the domain name itself, is a placeable, reorderable block:
 
 | Zone | Description |
 |---|---|
 | **Above** | Full-width blocks rendered before the domain header. Place the **Domain Hero** module here for the sticky scroll effect on domain names. |
 | **Left Column** | The main content column. Domain modules (Curator's Insight, Use Cases, etc.) go here. |
-| **Right Column** | The sticky sidebar. The price/offer panel is always shown at the top of the right column regardless of configuration — it is not a configurable block. |
+| **Right Column** | The sidebar. Sticky by default — see Deal Section Spacing below for the one case where it isn't. |
 | **Below** | Full-width blocks rendered after the main content area. |
 
 ### Layout settings
 
-Alongside the zones, two fields control spacing and presentation independent of any block:
+One field controls spacing independent of any block:
 
 | Field | Purpose |
 |---|---|
-| **Description Card Style** | Wraps the domain's description and tags in the same bordered-card treatment used by the Perfect Match For / Use Cases modules, instead of plain text. |
 | **Deal Section Spacing** | Controls the top and bottom padding of the two-column content area (None / XS / S / M / L / XL). |
-
-### Price Sidebar Settings
-
-Before the zone layout, there is a **Price Sidebar Settings** group that controls the text shown in the price/offer panel that appears at the top of every domain page sidebar:
-
-| Field | Default |
-|---|---|
-| **Price Heading** | Asking Price |
-| **Price Subtext** | Secure payment & seamless transfer. |
-| **Make Offer — Heading** | Make an Offer |
-| **Make Offer — Subheading** | (empty) |
-| **Make Offer — Button Text** | Submit Offer |
-| **Inquiry Form — Heading** | Ask a Question |
-| **Inquiry Form — Button Text** | Send Message |
-| **Marketplaces — Heading** | Listed On |
-| **Marketplaces — Subheading** | (empty) |
-
-<Note>
-  When a domain has no price set, the inquiry heading automatically changes to "Request Price" regardless of what's configured in the Inquiry Form Heading field.
-</Note>
 
 ### Domain modules
 
-The following modules are specific to domain pages and can be placed in the Left Column, Right Column, Above, or Below zones:
+The following modules are specific to domain pages and can be placed in the Left Column, Right Column, Above, or Below zones — nothing is shown unless you place it, including the domain name and description:
 
 | Module | Shows |
 |---|---|
 | **Domain Hero** | Large sticky domain name header. Best placed in the Above zone. |
+| **Domain Headline** | The domain name, an optional suffix (default "is for sale!"), and an optional category badge on the same line. |
+| **Category Badges** | Standalone category badge(s) — primary category only, or primary plus every additional category. Colored (tinted by the category's own color) or neutral. Independent of Domain Headline — use one, the other, or both. |
+| **Domain Description** | The domain's description and tags. Optional bordered-card treatment (matching the Perfect Match For / Use Cases look) via **Card Style**. |
 | **Curator's Insight** | The curator quote from the domain record. |
 | **Use Cases** | Numbered list of use cases. |
 | **Perfect Match For** | Ideal buyer persona paragraph. |
 | **Technical Dossier** | RDAP data: registrar, dates, name servers, transfer type. Has a **Hide young dates** option to suppress dates for recently registered domains. |
 | **Branding Playground** | Brand color preview widget. |
 | **Similar Domains** | Grid of up to 4 related domains from the domain's Similar Domains field. |
-| **Split Row** | Two modules side by side in a 2-column layout. Choose which module goes left and which goes right. |
-| **Domain Headline** | The domain name, suffix text, and category badge — placeable in any zone. On a [Landing Page](/domains/landing-pages) with the Logo Card header style, adding this module lets you reposition or restyle the headline instead of using the built-in default. |
-| **Breadcrumbs** | A standalone breadcrumb trail, for layouts whose header doesn't already show one inline. |
+| **Domain Views** | A stat-tile strip of real visitor traffic (views / unique visitors, today and last 30 days) — each stat independently toggleable. |
+| **Domain Views (Line)** | The same traffic stats as a single sentence with a leading icon, instead of stat tiles — the number placeholders can be bolded or colored right in the text editor. |
+| **Breadcrumbs** | A standalone breadcrumb trail, for layouts whose header doesn't already show one inline. Search-engine breadcrumb data is emitted regardless of whether this module is placed. |
+| **Split Row** | Two side-by-side columns, each holding any number of blocks (any module, sidebar widget, or general block — stacked if you add more than one per side). **Ratio** sets the column widths (Equal / Narrow-Wide / Wide-Narrow). **Sticky Right Column** pins the right side while scrolling (hidden when the ratio is Equal, where sticking it would run it off the bottom of the screen). **Align Shorter Column To Center** vertically centers whichever side has less content instead of top-aligning it. |
 
 ### Sidebar widgets
 
@@ -89,12 +72,17 @@ These widgets are available in all zones. They are most useful in the Right Colu
 
 | Widget | Shows |
 |---|---|
+| **Price + Buy Now** | The price/offer panel — heading and subtext are editable right on the block. This is what shows the Buy Now button, Spaceship Checkout, and AtomPay when eligible (see [Payment Settings](/configuration/payment-settings)). |
 | **Make an Offer Form** | Offer submission form. Rendered only when the domain's sale model allows offers. |
 | **Inquiry Form** | Contact/inquiry form. |
 | **Track Price Form** | Price drop alert subscription form. Only visible when Brevo is enabled in Notification Settings. |
-| **Buy Now / Marketplace Buttons** | Buy Now button (outbound link to your default payment provider, see [Payment Settings](/configuration/payment-settings)) plus links to Afternic, Sedo, Atom, and custom marketplaces enabled on the domain — prominence of the marketplace panel is configurable. |
+| **Marketplace Buttons** | Links to Afternic, Sedo, Atom, and custom marketplaces enabled on the domain — prominence of this panel relative to Buy Now is configurable. |
 | **Contact Messengers** | Direct WhatsApp / Telegram buttons, configured in [Messenger Settings](/configuration/messenger-settings). Hidden automatically if no channel is enabled, or if the domain's own **Hide Contact Messengers** checkbox is on. |
 | **Transfer Info** | A short transfer process explainer. |
+
+<Note>
+  When a domain has no price set, the inquiry heading automatically changes to "Request Price."
+</Note>
 
 ### General blocks
 
