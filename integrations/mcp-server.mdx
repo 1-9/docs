@@ -32,10 +32,16 @@ Any MCP-compatible client that supports OAuth discovery works the same way — p
 | **Forms** | List submitted form entries |
 | **Analytics** | Pull per-domain analytics and dashboard KPIs for any period |
 | **Settings** | Read your current configuration for any settings page (secrets are always redacted — see below) |
+| **Templates & Landing Pages** | View the block layout of any [template](/content/templates) (Home, Domain, Category, Categories, Blog) or [Landing Page](/domains/landing-pages); edit a block's fields in place, or add, remove, and reorder blocks in a zone |
 
-## Confirming offer and inquiry responses
+## Confirming sensitive actions
 
-Accepting, rejecting, or countering an offer or inquiry sends a real email to a real buyer, so this isn't a single tool call. The AI first proposes the action and shows you what it's about to do, then a second confirmation step actually applies it. This two-step gate exists specifically because not every AI client is guaranteed to show you an approval prompt before acting — the confirmation lives in the connector itself rather than relying on the client's UI.
+Some actions aren't a single tool call — the AI first proposes what it's about to do and shows you a preview, then a separate confirmation step actually applies it:
+
+- **Offer and inquiry responses** — accepting, rejecting, or countering sends a real email to a real buyer.
+- **Adding, removing, or reordering a block** on a template or Landing Page — this is a layout change that goes live on every matching page immediately, not scoped to one domain the way editing a domain's own fields is.
+
+Editing an existing block's own fields in place (its heading, text, image, etc.) doesn't need this extra step — only changes to a zone's actual block list do. This two-step gate exists specifically because not every AI client is guaranteed to show you an approval prompt before acting — the confirmation lives in the connector itself rather than relying on the client's UI.
 
 ## What's off-limits
 
@@ -43,7 +49,7 @@ To keep the connector's reach predictable, it can't touch:
 
 - **Technical Dossier** fields (RDAP data) or **Parking** configuration
 - Any credential or API key field — `get_settings` always returns `[REDACTED]` for secrets, never the real value
-- Page Builder blocks/sections on Pages or templates
+- Page Builder blocks/sections on **CMS Pages** — only a page's title, subheading, and SEO fields are editable through the connector
 - Media uploads
 - The Import/Export wizards
 
