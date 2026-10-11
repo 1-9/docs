@@ -11,10 +11,23 @@ description: "Point idle or unlisted domains at Cloudflare and redirect them str
 
 ## One-time setup
 
-1. In Cloudflare, generate an API token with `Zone: Edit`, `Zone: Read`, and `DNS: Edit` permissions (scoped to the account you'll park domains under).
+1. In Cloudflare, generate an API token scoped to the account you'll park domains under, with these permissions: `Zone → Zone → Edit`, `Zone → DNS → Edit`, `Zone → Single Redirect → Edit`, `Zone → Transform Rules → Edit`, `Account → Workers Scripts → Edit`, `Zone → Workers Routes → Edit`, and `Zone → Cache Purge → Purge`. The Workers and Cache Purge permissions are only needed for Proxy mode and for clearing the Cloudflare cache from **Reset Cache**; the rest cover redirect-mode parking.
 2. Find your **Cloudflare Account ID** on the right sidebar of any zone's Overview page in the Cloudflare dashboard.
 3. Go to **Settings → Parking** and fill in **Cloudflare Account ID** and **Cloudflare API Token** (the token is masked after saving, same as other secret fields in this platform).
 4. Optionally set a **Fallback Destination** — where parked traffic goes if the domain has no matching listing (defaults to your homepage). This only fires for genuinely orphaned traffic; it's not the normal redirect target.
+
+## Parking mode: Redirect or Proxy
+
+**Settings → Parking → Parking Mode** decides what a visitor sees when they open a parked domain:
+
+- **Redirect** (default) — a 302 sends the visitor to the domain's listing page on this site. The address bar changes to this site.
+- **Proxy** — the visitor stays on the parked domain's own URL while its page is served from this site, through a single Cloudflare Worker shared by all parked domains. Links inside the page that lead somewhere else on the site (the menu, categories, blog, other domains) take the visitor to this site; a link back to the parked domain's own page stays on it. Checkout, contact buttons, forms and tracking keep working from the parked domain.
+
+The mode is applied at the moment a domain is parked. After changing it, **Unpark** and **Park** your existing domains again — the Worker is also re-uploaded on every park, so re-parking any one domain refreshes it for all of them.
+
+<Note>
+  In Proxy mode the parked domain's pages are marked `noindex` so search engines keep ranking the listing page on this site, not a mirror of it. Proxy mode needs a public site URL — it can't work against `localhost`.
+</Note>
 
 ## Adding domains to parking
 
@@ -69,7 +82,7 @@ TXT status doesn't update automatically — click **Check TXT** to refresh it wi
 
 ## Unparking
 
-**Unpark** removes the redirect rule and the placeholder DNS records but leaves the Cloudflare zone itself intact — fully reversible. Re-parking later doesn't require redoing nameserver verification.
+**Unpark** removes the redirect rule or Worker route and the placeholder DNS records but leaves the Cloudflare zone itself intact — fully reversible. Re-parking later doesn't require redoing nameserver verification.
 
 ## Reconciliation
 
